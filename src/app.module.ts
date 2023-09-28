@@ -2,27 +2,30 @@ import { Module } from '@nestjs/common';
 import { AppController } from './app.controller';
 import { AppService } from './app.service';
 import { UsersModule } from './users/users.module';
-
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { DataSource } from 'typeorm';
 
-const typeOrmModule = TypeOrmModule.forRoot({
-  type: 'mysql',
-  host: 'localhost',
-  port: 3306,
-  username: 'root',
-  password: 'root',
-  database: 'test',
-  entities: [],
-  synchronize: true,
-});
+import { ConfigService, ConfigModule } from '@nestjs/config';
+import { CliModule } from './cli/cli.module';
+import { ormConfig } from './db/orm.config';
 
 @Module({
   // add orm module to create persistence instance
-  imports: [typeOrmModule, UsersModule],
+  imports: [
+    ConfigModule.forRoot(),
+    TypeOrmModule.forRootAsync({
+      imports: [ConfigModule],
+      inject: [ConfigService],
+      useFactory: () => {
+        return ormConfig;
+      },
+    }),
+    UsersModule,
+    CliModule,
+  ],
   controllers: [AppController],
   providers: [AppService],
 })
 export class AppModule {
-  constructor(private dataSource: DataSource) {}
+  constructor(dataSource: DataSource) {}
 }
