@@ -8,6 +8,7 @@ import { DataSource } from 'typeorm';
 import { ConfigService, ConfigModule } from '@nestjs/config';
 import { CliModule } from './cli/cli.module';
 import { ormConfig } from './db/orm.config';
+import { AuthModule } from './auth/auth.module';
 
 @Module({
   // add orm module to create persistence instance
@@ -22,6 +23,7 @@ import { ormConfig } from './db/orm.config';
     }),
     UsersModule,
     CliModule,
+    AuthModule,
   ],
   controllers: [AppController],
   providers: [AppService],

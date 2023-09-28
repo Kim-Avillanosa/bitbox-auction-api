@@ -7,6 +7,7 @@ async function bootstrap() {
 
   const config = new DocumentBuilder()
     .setTitle('Item Auction API')
+    .addBearerAuth()
     .setDescription('Web service for item auctions')
     .setVersion('1.0')
     .addTag('users')

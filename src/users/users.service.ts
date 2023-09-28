@@ -18,13 +18,28 @@ export class UsersService {
   }
 
   findAll(): Promise<User[]> {
-    var response = this.usersRepository.find();
+    var response = this.usersRepository.find({
+      select: ['id', 'email', 'created_at', 'updated_at'],
+    });
 
     return response;
   }
 
   findOne(id: number): Promise<User> {
-    return this.usersRepository.findOneBy({ id });
+    return this.usersRepository.findOne({
+      select: ['id', 'email', 'created_at', 'updated_at'],
+      where: {
+        id: id,
+      },
+    });
+  }
+
+  findByEmail(email): Promise<User> {
+    return this.usersRepository.findOne({
+      where: {
+        email: email,
+      },
+    });
   }
 
   async update(

@@ -1,20 +1,20 @@
 import { ConfigService } from '@nestjs/config';
 import { TypeOrmModuleOptions } from '@nestjs/typeorm';
-import { config } from 'dotenv';
 import { DataSource, DataSourceOptions } from 'typeorm';
+import { config } from 'dotenv';
 
 config();
 
 const configService = new ConfigService();
 
-export const ormConfig: TypeOrmModuleOptions & DataSourceOptions = {
-  /* the service requires the connection parameters 
+/* the service requires the connection parameters 
    should not be stored within the codebase, but instead placed as 
    an environment variable (as a security measure). 
    This is why i stored it on a different place
    also, with the extension of seeder option in which it is also 
    an essential to have sample data upon initialization
  */
+export const ormConfig: TypeOrmModuleOptions & DataSourceOptions = {
   type: 'mysql',
   port: 3306,
   host: configService.get<string>('TYPEORM_DATABASE_HOST'),
@@ -24,8 +24,8 @@ export const ormConfig: TypeOrmModuleOptions & DataSourceOptions = {
   logging: false,
   synchronize: true,
   entities: [__dirname + '/../**/*.entity{.ts,.js}'], // maps all entities
-  migrations: ['dist/src/db/migration/*.{.ts,.js}'],
-  migrationsRun: true,
+  migrations: ['dist/src/db/migration/*.{.ts,.js}'], // maps migrations path
+  migrationsRun: true, // executes pending migrations on run
   migrationsTableName: 'migrations',
 };
 
