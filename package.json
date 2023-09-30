@@ -8,8 +8,10 @@
   "scripts": {
     "typeorm": "ts-node ./node_modules/typeorm/cli",
     "show": "npm run typeorm -- -d ./src/db/orm.config.ts migration:show",
+    "orm:clear": "npm run typeorm -- -d ./src/db/orm.config.ts cache:clear",
     "orm:run": "npm run typeorm -- -d ./src/db/orm.config.ts migration:run",
-    "orm:generate": "npm run build && npm run typeorm -- -d ./src/db/orm.config.ts migration:generate",
+    "orm:create": "ts-node ./create-migration.ts",
+    "orm:generate": "ts-node ./generate-migration.ts",
     "orm:revert": "npm run typeorm -- -d ./src/db/orm.config.ts migration:revert",
     "build": "nest build",
     "start": "nest start",

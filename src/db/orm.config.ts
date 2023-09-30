@@ -24,7 +24,7 @@ export const ormConfig: TypeOrmModuleOptions & DataSourceOptions = {
   logging: false,
   synchronize: true,
   entities: [__dirname + '/../**/*.entity{.ts,.js}'], // maps all entities
-  migrations: ['dist/src/db/migration/*.{.ts,.js}'], // maps migrations path
+  migrations: ['dist/db/migration/*.{.ts,.js}'], // maps migrations path
   migrationsRun: true, // executes pending migrations on run
   migrationsTableName: 'migrations',
 };

@@ -4,12 +4,20 @@ import { UpdateUserDto } from './dto/update-user.dto';
 import { InjectRepository } from '@nestjs/typeorm';
 import { User } from './entities/user.entity';
 import { Repository, UpdateResult } from 'typeorm';
+import { Debit } from '../debit/entities/debit.entity';
+import { Credit } from '../credit/entities/credit.entity';
 
 @Injectable()
 export class UsersService {
   constructor(
     @InjectRepository(User)
     private usersRepository: Repository<User>,
+
+    @InjectRepository(Credit)
+    private creditRepository: Repository<Credit>,
+
+    @InjectRepository(Debit)
+    private debitRepository: Repository<Debit>,
   ) {}
 
   async create(createUserDto: CreateUserDto): Promise<User> {
@@ -19,7 +27,7 @@ export class UsersService {
 
   findAll(): Promise<User[]> {
     var response = this.usersRepository.find({
-      select: ['id', 'email', 'created_at', 'updated_at'],
+      select: ['id', 'email', 'created_at', 'updated_at', 'deposits'],
     });
 
     return response;
@@ -27,7 +35,7 @@ export class UsersService {
 
   findOne(id: number): Promise<User> {
     return this.usersRepository.findOne({
-      select: ['id', 'email', 'created_at', 'updated_at'],
+      select: ['id', 'email', 'created_at', 'updated_at', 'deposits'],
       where: {
         id: id,
       },
@@ -51,5 +59,20 @@ export class UsersService {
 
   async remove(id: number): Promise<void> {
     this.usersRepository.delete(id);
+  }
+
+  async balance(id: number): Promise<{ balance: number }> {
+    const totalDebit = await this.debitRepository.sum('amount', {
+      userId: id,
+    });
+
+    const totalCredit = await this.creditRepository.sum('amount', {
+      userId: id,
+    });
+
+    const overall = totalDebit - totalCredit;
+    return Promise.resolve({
+      balance: overall,
+    });
   }
 }

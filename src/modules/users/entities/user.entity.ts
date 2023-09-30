@@ -1,24 +1,17 @@
+import { Credit } from 'src/modules/credit/entities/credit.entity';
+import { Debit } from 'src/modules/debit/entities/debit.entity';
 import {
   Column,
   Entity,
   PrimaryGeneratedColumn,
   CreateDateColumn,
   UpdateDateColumn,
+  OneToMany,
 } from 'typeorm';
 import { EncryptionTransformer } from 'typeorm-encrypted';
 
 @Entity()
 export class User {
-  //primary key for every tables
-  @PrimaryGeneratedColumn()
-  id?: number;
-
-  @CreateDateColumn()
-  created_at?: Date; // Creation date
-
-  @UpdateDateColumn()
-  updated_at?: Date; // Last updated date
-
   @Column({ nullable: false })
   email: string;
 
@@ -32,4 +25,20 @@ export class User {
     }),
   })
   password: string;
+
+  //primary key for every tables
+  @PrimaryGeneratedColumn()
+  id?: number;
+
+  @CreateDateColumn()
+  created_at?: Date; // Creation date
+
+  @UpdateDateColumn()
+  updated_at?: Date; // Last updated date
+
+  @OneToMany(() => Debit, (debit) => debit.user)
+  deposits: Debit[];
+
+  @OneToMany(() => Credit, (credit) => credit.user)
+  withdrawals: Credit[];
 }

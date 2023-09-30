@@ -1,14 +1,16 @@
 import { Module } from '@nestjs/common';
 import { AppController } from './app.controller';
 import { AppService } from './app.service';
-import { UsersModule } from './users/users.module';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { DataSource } from 'typeorm';
 
 import { ConfigService, ConfigModule } from '@nestjs/config';
 import { CliModule } from './cli/cli.module';
 import { ormConfig } from './db/orm.config';
-import { AuthModule } from './auth/auth.module';
+import { UsersModule } from './modules/users/users.module';
+import { AuthModule } from './modules/auth/auth.module';
+import { DebitModule } from './modules/debit/debit.module';
+import { CreditModule } from './modules/credit/credit.module';
 
 @Module({
   // add orm module to create persistence instance
@@ -24,6 +26,8 @@ import { AuthModule } from './auth/auth.module';
     UsersModule,
     CliModule,
     AuthModule,
+    DebitModule,
+    CreditModule,
   ],
   controllers: [AppController],
   providers: [AppService],
