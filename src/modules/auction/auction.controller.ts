@@ -65,7 +65,7 @@ export class AuctionController {
     return this.auctionService.getBidList(id);
   }
 
-  @Get('status/:status')
+  @Get('list/:status')
   getAuctions(@Param('status') status: AuctionStatus) {
     return this.auctionService.getAuctions(status);
   }
