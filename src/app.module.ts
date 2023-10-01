@@ -17,7 +17,8 @@ import { JWTUtil } from './jwt/jwt.service';
 import { ServeStaticModule } from '@nestjs/serve-static';
 import { join } from 'path';
 import { CronModule } from './modules/cron/cron.module';
-import { ThrottlerModule } from '@nestjs/throttler';
+import { ThrottlerGuard, ThrottlerModule } from '@nestjs/throttler';
+import { APP_GUARD } from '@nestjs/core';
 
 @Module({
   // add orm module to create persistence instance
@@ -49,7 +50,14 @@ import { ThrottlerModule } from '@nestjs/throttler';
     CronModule,
   ],
   controllers: [AppController],
-  providers: [AppService, JWTUtil],
+  providers: [
+    AppService,
+    JWTUtil,
+    {
+      provide: APP_GUARD,
+      useClass: ThrottlerGuard,
+    },
+  ],
 })
 export class AppModule {
   constructor(dataSource: DataSource) {}
