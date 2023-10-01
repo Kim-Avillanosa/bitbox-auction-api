@@ -22,5 +22,5 @@ export declare class AuctionController {
     getHigestBidder(id: number): Promise<import("./entities/auctionbid.entity").AuctionBid | {
         message: string;
     }>;
-    getAuctions(status: AuctionStatus): Promise<import("./entities/auction.entity").Auction[]>;
+    getAuctions(status: AuctionStatus): Promise<any[]>;
 }

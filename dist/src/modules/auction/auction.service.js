@@ -25,9 +25,14 @@ let AuctionService = class AuctionService {
         this.auctionBidRepository = auctionBidRepository;
     }
     async getAuctions(status) {
-        return this.auctionRepository.find({
-            where: { status: status },
-        });
+        const query = this.auctionRepository
+            .createQueryBuilder('auction')
+            .leftJoin(auctionbid_entity_1.AuctionBid, 'bid', 'bid.auctionId = auction.id')
+            .select(['auction', 'MAX(bid.amount) AS currentBid'])
+            .where('auction.status = :status', { status })
+            .groupBy('auction.id')
+            .getRawMany();
+        return query;
     }
     async create(created_by, createAuctionDto) {
         const data = {
