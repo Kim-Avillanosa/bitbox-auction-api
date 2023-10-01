@@ -74,6 +74,16 @@ export class UsersService {
   }
 
   async balance(id: number): Promise<{ balance: number }> {
+    const debitCount = await this.debitRepository.count({
+      where: {
+        userId: id,
+      },
+    });
+
+    if (debitCount == 0) {
+      return { balance: 0 };
+    }
+
     const totalDebit = await this.debitRepository.sum('amount', {
       userId: id,
     });
