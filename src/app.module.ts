@@ -12,6 +12,7 @@ import { AuthModule } from './modules/auth/auth.module';
 import { DebitModule } from './modules/debit/debit.module';
 import { CreditModule } from './modules/credit/credit.module';
 import { AuctionModule } from './modules/auction/auction.module';
+import { JWTUtil } from './jwt/jwt.service';
 
 @Module({
   // add orm module to create persistence instance
@@ -32,7 +33,7 @@ import { AuctionModule } from './modules/auction/auction.module';
     AuctionModule,
   ],
   controllers: [AppController],
-  providers: [AppService],
+  providers: [AppService, JWTUtil],
 })
 export class AppModule {
   constructor(dataSource: DataSource) {}
