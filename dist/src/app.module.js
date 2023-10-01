@@ -28,6 +28,7 @@ const serve_static_1 = require("@nestjs/serve-static");
 const path_1 = require("path");
 const cron_module_1 = require("./modules/cron/cron.module");
 const throttler_1 = require("@nestjs/throttler");
+const core_1 = require("@nestjs/core");
 let AppModule = class AppModule {
     constructor(dataSource) { }
 };
@@ -62,7 +63,14 @@ exports.AppModule = AppModule = __decorate([
             cron_module_1.CronModule,
         ],
         controllers: [app_controller_1.AppController],
-        providers: [app_service_1.AppService, jwt_service_1.JWTUtil],
+        providers: [
+            app_service_1.AppService,
+            jwt_service_1.JWTUtil,
+            {
+                provide: core_1.APP_GUARD,
+                useClass: throttler_1.ThrottlerGuard,
+            },
+        ],
     }),
     __metadata("design:paramtypes", [typeorm_2.DataSource])
 ], AppModule);

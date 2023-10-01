@@ -48,11 +48,14 @@ let AuctionService = class AuctionService {
         return query;
     }
     async create(created_by, createAuctionDto) {
+        var startdate = new Date(Date.now());
+        var enddate = startdate;
+        enddate.setMinutes(startdate.getMinutes() + 1);
         const data = {
             created_by: created_by,
             itemName: createAuctionDto.name,
             startPrice: createAuctionDto.startAmount,
-            expiration: createAuctionDto.expiration,
+            expiration: enddate,
         };
         this.auctionRepository.create(data);
         return this.auctionRepository.save(data);
