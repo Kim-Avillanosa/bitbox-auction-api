@@ -36,24 +36,7 @@ exports.AppModule = AppModule;
 exports.AppModule = AppModule = __decorate([
     (0, common_1.Module)({
         imports: [
-            throttler_1.ThrottlerModule.forRoot([
-                {
-                    ttl: 5000,
-                    limit: 1,
-                },
-            ]),
-            serve_static_1.ServeStaticModule.forRoot({
-                rootPath: (0, path_1.join)(__dirname, '..', 'swagger-static'),
-                serveRoot: process.env.NODE_ENV === 'development' ? '/' : '/swagger',
-            }),
             config_1.ConfigModule.forRoot(),
-            typeorm_1.TypeOrmModule.forRootAsync({
-                imports: [config_1.ConfigModule],
-                inject: [config_1.ConfigService],
-                useFactory: () => {
-                    return orm_config_1.ormConfig;
-                },
-            }),
             users_module_1.UsersModule,
             cli_module_1.CliModule,
             auth_module_1.AuthModule,
@@ -61,6 +44,27 @@ exports.AppModule = AppModule = __decorate([
             credit_module_1.CreditModule,
             auction_module_1.AuctionModule,
             cron_module_1.CronModule,
+            throttler_1.ThrottlerModule.forRootAsync({
+                imports: [config_1.ConfigModule],
+                inject: [config_1.ConfigService],
+                useFactory: (config) => [
+                    {
+                        ttl: config.get('THROTTLE_TTL'),
+                        limit: config.get('THROTTLE_LIMIT'),
+                    },
+                ],
+            }),
+            typeorm_1.TypeOrmModule.forRootAsync({
+                imports: [config_1.ConfigModule],
+                inject: [config_1.ConfigService],
+                useFactory: () => {
+                    return orm_config_1.ormConfig;
+                },
+            }),
+            serve_static_1.ServeStaticModule.forRoot({
+                rootPath: (0, path_1.join)(__dirname, '..', 'swagger-static'),
+                serveRoot: process.env.NODE_ENV === 'development' ? '/' : '/swagger',
+            }),
         ],
         controllers: [app_controller_1.AppController],
         providers: [

@@ -23,24 +23,7 @@ import { APP_GUARD } from '@nestjs/core';
 @Module({
   // add orm module to create persistence instance
   imports: [
-    ThrottlerModule.forRoot([
-      {
-        ttl: 5000,
-        limit: 1,
-      },
-    ]),
-    ServeStaticModule.forRoot({
-      rootPath: join(__dirname, '..', 'swagger-static'),
-      serveRoot: process.env.NODE_ENV === 'development' ? '/' : '/swagger',
-    }),
     ConfigModule.forRoot(),
-    TypeOrmModule.forRootAsync({
-      imports: [ConfigModule],
-      inject: [ConfigService],
-      useFactory: () => {
-        return ormConfig;
-      },
-    }),
     UsersModule,
     CliModule,
     AuthModule,
@@ -48,6 +31,27 @@ import { APP_GUARD } from '@nestjs/core';
     CreditModule,
     AuctionModule,
     CronModule,
+    ThrottlerModule.forRootAsync({
+      imports: [ConfigModule],
+      inject: [ConfigService],
+      useFactory: (config: ConfigService) => [
+        {
+          ttl: config.get('THROTTLE_TTL'),
+          limit: config.get('THROTTLE_LIMIT'),
+        },
+      ],
+    }),
+    TypeOrmModule.forRootAsync({
+      imports: [ConfigModule],
+      inject: [ConfigService],
+      useFactory: () => {
+        return ormConfig;
+      },
+    }),
+    ServeStaticModule.forRoot({
+      rootPath: join(__dirname, '..', 'swagger-static'),
+      serveRoot: process.env.NODE_ENV === 'development' ? '/' : '/swagger',
+    }),
   ],
   controllers: [AppController],
   providers: [
