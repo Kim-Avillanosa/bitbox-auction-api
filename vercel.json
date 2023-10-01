@@ -12,5 +12,11 @@
       "dest": "src/main.ts",
       "methods": ["GET", "POST", "PUT", "PATCH", "DELETE", "OPTIONS", "PATCH"]
     }
+  ],
+  "crons": [
+    {
+      "path": "/cron/ping",
+      "schedule": "*/1 * * * *"
+    }
   ]
 }
