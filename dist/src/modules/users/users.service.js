@@ -26,6 +26,14 @@ let UsersService = class UsersService {
         this.debitRepository = debitRepository;
     }
     async create(createUserDto) {
+        var userCount = await this.usersRepository.count({
+            where: {
+                email: createUserDto.email,
+            },
+        });
+        if (userCount > 0) {
+            throw new common_1.BadRequestException(`Apologies, but it appears that this email address is already in use within our system. If you believe this is a mistake or need assistance, please reach out to our support team for further help. Thank you!`);
+        }
         var request = this.usersRepository.create(createUserDto);
         return this.usersRepository.save(request);
     }

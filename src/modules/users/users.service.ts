@@ -1,4 +1,4 @@
-import { Injectable } from '@nestjs/common';
+import { BadRequestException, Injectable } from '@nestjs/common';
 import { CreateUserDto } from './dto/create-user.dto';
 import { UpdateUserDto } from './dto/update-user.dto';
 import { InjectRepository } from '@nestjs/typeorm';
@@ -21,6 +21,18 @@ export class UsersService {
   ) {}
 
   async create(createUserDto: CreateUserDto): Promise<User> {
+    var userCount = await this.usersRepository.count({
+      where: {
+        email: createUserDto.email,
+      },
+    });
+
+    if (userCount > 0) {
+      throw new BadRequestException(
+        `Apologies, but it appears that this email address is already in use within our system. If you believe this is a mistake or need assistance, please reach out to our support team for further help. Thank you!`,
+      );
+    }
+
     var request = this.usersRepository.create(createUserDto);
     return this.usersRepository.save(request);
   }
