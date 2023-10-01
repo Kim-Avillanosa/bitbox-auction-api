@@ -24,6 +24,9 @@ export class Auction {
   @Column({ nullable: false })
   itemName: string;
 
+  @Column({ nullable: false })
+  created_by: string;
+
   @Column({ type: 'decimal' })
   startPrice: number;
 

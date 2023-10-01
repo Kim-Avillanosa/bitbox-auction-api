@@ -8,9 +8,11 @@ export declare class AuctionService {
     private auctionBidRepository;
     constructor(auctionRepository: Repository<Auction>, auctionBidRepository: Repository<AuctionBid>);
     getAuctions(status: AuctionStatus): Promise<Auction[]>;
-    create(createAuctionDto: CreateAuctionDto): Promise<{
+    create(created_by: string, createAuctionDto: CreateAuctionDto): Promise<{
+        created_by: string;
         itemName: string;
         startPrice: number;
+        expiration: Date;
     } & Auction>;
     startBid(id: number): Promise<import("typeorm").UpdateResult>;
     highestBidder(id: number): Promise<AuctionBid | {

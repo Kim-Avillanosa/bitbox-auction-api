@@ -30,6 +30,10 @@ __decorate([
     __metadata("design:type", String)
 ], Auction.prototype, "itemName", void 0);
 __decorate([
+    (0, typeorm_1.Column)({ nullable: false }),
+    __metadata("design:type", String)
+], Auction.prototype, "created_by", void 0);
+__decorate([
     (0, typeorm_1.Column)({ type: 'decimal' }),
     __metadata("design:type", Number)
 ], Auction.prototype, "startPrice", void 0);

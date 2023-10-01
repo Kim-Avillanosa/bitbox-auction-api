@@ -27,8 +27,10 @@ let AuctionController = class AuctionController {
         this.auctionService = auctionService;
         this.jwtUtil = jwtUtil;
     }
-    create(createAuctionDto) {
-        return this.auctionService.create(createAuctionDto);
+    create(createAuctionDto, req) {
+        const authHeader = req.headers.authorization;
+        const token = this.jwtUtil.decode(authHeader);
+        return this.auctionService.create(token.username, createAuctionDto);
     }
     start(id) {
         return this.auctionService.startBid(id);
@@ -49,8 +51,9 @@ exports.AuctionController = AuctionController;
 __decorate([
     (0, common_1.Post)(),
     __param(0, (0, common_1.Body)()),
+    __param(1, (0, common_1.Req)()),
     __metadata("design:type", Function),
-    __metadata("design:paramtypes", [create_auction_dto_1.CreateAuctionDto]),
+    __metadata("design:paramtypes", [create_auction_dto_1.CreateAuctionDto, Object]),
     __metadata("design:returntype", void 0)
 ], AuctionController.prototype, "create", null);
 __decorate([

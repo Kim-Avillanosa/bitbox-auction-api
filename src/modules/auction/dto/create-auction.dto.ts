@@ -6,4 +6,7 @@ export class CreateAuctionDto {
 
   @ApiProperty({ default: '', required: false })
   name: string;
+
+  @ApiProperty({ required: false })
+  expiration: Date;
 }

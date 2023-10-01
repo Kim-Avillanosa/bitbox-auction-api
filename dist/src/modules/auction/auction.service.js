@@ -29,10 +29,12 @@ let AuctionService = class AuctionService {
             where: { status: status },
         });
     }
-    async create(createAuctionDto) {
+    async create(created_by, createAuctionDto) {
         const data = {
+            created_by: created_by,
             itemName: createAuctionDto.name,
             startPrice: createAuctionDto.startAmount,
+            expiration: createAuctionDto.expiration,
         };
         this.auctionRepository.create(data);
         return this.auctionRepository.save(data);

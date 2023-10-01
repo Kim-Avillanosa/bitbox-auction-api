@@ -24,10 +24,12 @@ export class AuctionService {
   }
 
   // Create an auction
-  async create(createAuctionDto: CreateAuctionDto) {
+  async create(created_by: string, createAuctionDto: CreateAuctionDto) {
     const data = {
+      created_by: created_by,
       itemName: createAuctionDto.name,
       startPrice: createAuctionDto.startAmount,
+      expiration: createAuctionDto.expiration,
     };
     this.auctionRepository.create(data);
 

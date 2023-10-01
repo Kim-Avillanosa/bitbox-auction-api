@@ -31,8 +31,11 @@ export class AuctionController {
   ) {}
 
   @Post()
-  create(@Body() createAuctionDto: CreateAuctionDto) {
-    return this.auctionService.create(createAuctionDto);
+  create(@Body() createAuctionDto: CreateAuctionDto, @Req() req) {
+    const authHeader = req.headers.authorization;
+    const token = this.jwtUtil.decode(authHeader);
+
+    return this.auctionService.create(token.username, createAuctionDto);
   }
 
   @Post(':id/start')
