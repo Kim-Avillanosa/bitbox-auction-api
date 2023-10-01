@@ -33,7 +33,7 @@ export class Auction {
   @CreateDateColumn()
   created_at?: Date; // Creation date
 
-  @Column({ type: 'datetime2' })
+  @Column({ type: 'datetime' })
   expiration: Date;
 
   @UpdateDateColumn()
