@@ -8,9 +8,9 @@ const fs_1 = require("fs");
 async function bootstrap() {
     const app = await core_1.NestFactory.create(app_module_1.AppModule, { cors: true });
     app.enableCors({
-        origin: 'http://localhost:3000',
+        origin: '*',
         methods: 'GET,HEAD,PUT,PATCH,POST,DELETE',
-        preflightContinue: false,
+        preflightContinue: true,
         optionsSuccessStatus: 204,
     });
     const config = new swagger_1.DocumentBuilder()
