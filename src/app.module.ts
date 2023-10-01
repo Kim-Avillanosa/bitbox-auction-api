@@ -14,9 +14,16 @@ import { CreditModule } from './modules/credit/credit.module';
 import { AuctionModule } from './modules/auction/auction.module';
 import { JWTUtil } from './jwt/jwt.service';
 
+import { ServeStaticModule } from '@nestjs/serve-static';
+import { join } from 'path';
+
 @Module({
   // add orm module to create persistence instance
   imports: [
+    ServeStaticModule.forRoot({
+      rootPath: join(__dirname, '..', 'swagger-static'),
+      serveRoot: process.env.NODE_ENV === 'development' ? '/' : '/swagger',
+    }),
     ConfigModule.forRoot(),
     TypeOrmModule.forRootAsync({
       imports: [ConfigModule],
