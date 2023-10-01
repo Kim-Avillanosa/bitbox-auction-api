@@ -1,5 +1,4 @@
-import { CreateCronDto } from './create-cron.dto';
-declare const UpdateCronDto_base: import("@nestjs/common").Type<Partial<CreateCronDto>>;
+declare const UpdateCronDto_base: import("@nestjs/common").Type<Partial<unknown>>;
 export declare class UpdateCronDto extends UpdateCronDto_base {
 }
 export {};

@@ -18,7 +18,7 @@ let CronController = class CronController {
         this.cronService = cronService;
     }
     ping() {
-        return 'Pinging';
+        return this.cronService.ping();
     }
 };
 exports.CronController = CronController;

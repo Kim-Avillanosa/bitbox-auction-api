@@ -8,8 +8,6 @@ import {
   Delete,
 } from '@nestjs/common';
 import { CronService } from './cron.service';
-import { CreateCronDto } from './dto/create-cron.dto';
-import { UpdateCronDto } from './dto/update-cron.dto';
 import { ApiTags } from '@nestjs/swagger';
 
 @Controller('cron')
@@ -19,6 +17,6 @@ export class CronController {
 
   @Get('ping')
   ping() {
-    return 'Pinging';
+    return this.cronService.ping();
   }
 }

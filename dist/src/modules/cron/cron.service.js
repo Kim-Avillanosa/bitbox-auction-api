@@ -9,20 +9,8 @@ Object.defineProperty(exports, "__esModule", { value: true });
 exports.CronService = void 0;
 const common_1 = require("@nestjs/common");
 let CronService = class CronService {
-    create(createCronDto) {
-        return 'This action adds a new cron';
-    }
-    findAll() {
+    ping() {
         return `This action returns all cron`;
-    }
-    findOne(id) {
-        return `This action returns a #${id} cron`;
-    }
-    update(id, updateCronDto) {
-        return `This action updates a #${id} cron`;
-    }
-    remove(id) {
-        return `This action removes a #${id} cron`;
     }
 };
 exports.CronService = CronService;
