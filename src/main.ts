@@ -10,6 +10,7 @@ async function bootstrap() {
   const app = await NestFactory.create(AppModule, { cors: true });
   app.enableCors({
     origin: '*',
+    preflightContinue: true,
   });
 
   const config = new DocumentBuilder()
