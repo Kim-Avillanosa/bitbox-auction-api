@@ -11,7 +11,7 @@ import {
 } from '@nestjs/common';
 import { DebitService } from './debit.service';
 import { AuthGuard } from '../auth/auth.guard';
-import { JWTUtil } from 'src/jwt.module.ts';
+import { JWTUtil } from 'src/jwt/jwt.service.ts';
 import { ApiBearerAuth } from '@nestjs/swagger';
 import { DepositDto } from './dto/deposit.dto';
 
