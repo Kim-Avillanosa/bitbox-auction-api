@@ -7,7 +7,7 @@ import { writeFileSync, createWriteStream } from 'fs';
 import { get } from 'http';
 
 async function bootstrap() {
-  const app = await NestFactory.create(AppModule);
+  const app = await NestFactory.create(AppModule, { cors: true });
   app.enableCors({
     origin: '*',
   });
