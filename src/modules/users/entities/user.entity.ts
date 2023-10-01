@@ -1,6 +1,8 @@
 import { AuctionBid } from 'src/modules/auction/entities/auctionbid.entity';
 import { Credit } from 'src/modules/credit/entities/credit.entity';
 import { Debit } from 'src/modules/debit/entities/debit.entity';
+
+import { Exclude, ClassTransformer } from 'class-transformer';
 import {
   Column,
   Entity,
@@ -26,6 +28,7 @@ export class User {
       iv: 'ff5ac19190424b1d88f9419ef949ae56',
     }),
   })
+  @Exclude()
   password: string;
 
   //primary key for every tables

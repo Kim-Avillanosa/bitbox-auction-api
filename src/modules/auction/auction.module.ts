@@ -4,10 +4,11 @@ import { AuctionController } from './auction.controller';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { Auction } from './entities/auction.entity';
 import { AuctionBid } from './entities/auctionbid.entity';
+import { JWTUtil } from 'src/jwt/jwt.service';
 
 @Module({
   imports: [TypeOrmModule.forFeature([Auction, AuctionBid])],
   controllers: [AuctionController],
-  providers: [AuctionService],
+  providers: [AuctionService, JWTUtil],
 })
 export class AuctionModule {}

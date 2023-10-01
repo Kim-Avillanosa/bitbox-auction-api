@@ -8,16 +8,19 @@ import {
   createParamDecorator,
   Headers,
   Req,
+  UseInterceptors,
 } from '@nestjs/common';
 import { DebitService } from './debit.service';
 import { AuthGuard } from '../auth/auth.guard';
 import { JWTUtil } from 'src/jwt/jwt.service';
 import { ApiBearerAuth } from '@nestjs/swagger';
 import { DepositDto } from './dto/deposit.dto';
+import { ClassSerializerInterceptor } from '@nestjs/common';
 
+@UseInterceptors(ClassSerializerInterceptor)
 @ApiBearerAuth()
-@Controller('debit')
 @UseGuards(AuthGuard)
+@Controller('debit')
 export class DebitController {
   constructor(
     private readonly debitService: DebitService,
