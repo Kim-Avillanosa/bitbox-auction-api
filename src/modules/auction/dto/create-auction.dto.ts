@@ -8,5 +8,5 @@ export class CreateAuctionDto {
   name: string;
 
   @ApiProperty({ required: false })
-  expiration: Date;
+  duration: number;
 }

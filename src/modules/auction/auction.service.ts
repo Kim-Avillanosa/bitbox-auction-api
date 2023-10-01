@@ -53,7 +53,7 @@ export class AuctionService {
     var startdate = new Date(Date.now());
     var enddate = startdate;
 
-    enddate.setMinutes(startdate.getMinutes() + 1);
+    enddate.setMinutes(startdate.getMinutes() + createAuctionDto.duration);
 
     const data = {
       created_by: created_by,

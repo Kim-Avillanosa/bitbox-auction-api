@@ -24,6 +24,6 @@ __decorate([
 ], CreateAuctionDto.prototype, "name", void 0);
 __decorate([
     (0, swagger_1.ApiProperty)({ required: false }),
-    __metadata("design:type", Date)
-], CreateAuctionDto.prototype, "expiration", void 0);
+    __metadata("design:type", Number)
+], CreateAuctionDto.prototype, "duration", void 0);
 //# sourceMappingURL=create-auction.dto.js.map

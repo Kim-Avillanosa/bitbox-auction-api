@@ -50,7 +50,7 @@ let AuctionService = class AuctionService {
     async create(created_by, createAuctionDto) {
         var startdate = new Date(Date.now());
         var enddate = startdate;
-        enddate.setMinutes(startdate.getMinutes() + 1);
+        enddate.setMinutes(startdate.getMinutes() + createAuctionDto.duration);
         const data = {
             created_by: created_by,
             itemName: createAuctionDto.name,
