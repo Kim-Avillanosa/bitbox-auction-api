@@ -9,7 +9,9 @@ import {
 } from '@nestjs/common';
 import { CronService } from './cron.service';
 import { ApiTags } from '@nestjs/swagger';
+import { SkipThrottle } from '@nestjs/throttler';
 
+@SkipThrottle()
 @Controller('cron')
 @ApiTags('cron')
 export class CronController {

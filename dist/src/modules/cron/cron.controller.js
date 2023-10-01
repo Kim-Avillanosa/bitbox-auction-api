@@ -13,6 +13,7 @@ exports.CronController = void 0;
 const common_1 = require("@nestjs/common");
 const cron_service_1 = require("./cron.service");
 const swagger_1 = require("@nestjs/swagger");
+const throttler_1 = require("@nestjs/throttler");
 let CronController = class CronController {
     constructor(cronService) {
         this.cronService = cronService;
@@ -29,6 +30,7 @@ __decorate([
     __metadata("design:returntype", void 0)
 ], CronController.prototype, "ping", null);
 exports.CronController = CronController = __decorate([
+    (0, throttler_1.SkipThrottle)(),
     (0, common_1.Controller)('cron'),
     (0, swagger_1.ApiTags)('cron'),
     __metadata("design:paramtypes", [cron_service_1.CronService])

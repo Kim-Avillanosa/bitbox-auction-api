@@ -36,7 +36,7 @@ let CronService = class CronService {
             .leftJoin(auctionbid_entity_1.AuctionBid, 'bid', 'bid.auctionId = auction.id')
             .select(['auction', 'MAX(bid.amount) AS currentBid'])
             .where('auction.status = :status', { status })
-            .andWhere('auction.expirationDate > :currentDate', { currentDate })
+            .andWhere('auction.expiration < :currentDate', { currentDate })
             .groupBy('auction.id')
             .getMany();
         return query;
@@ -44,36 +44,38 @@ let CronService = class CronService {
     async ping() {
         const pendingAuctions = await this.getAuctions(auction_entity_1.AuctionStatus.ONGOING);
         if (pendingAuctions.length <= 0) {
-            return 'Nothing so far.';
+            return Promise.resolve('Nothing so far.');
         }
         pendingAuctions.forEach(async (item) => {
             const highestBidder = await this.auctionBidRepository.find({
                 where: { auctionId: item.id },
                 order: { amount: 'DESC' },
-                take: 1,
                 relations: ['user', 'auction'],
             });
-            const highest = highestBidder[0];
-            const others = highestBidder.filter((x) => x != highest);
-            const highestCredit = await this.creditRepository.findOneBy({
-                userId: highest.userId,
-                amount: highest.amount,
-            });
-            highestCredit.status = credit_entity_1.CreditStatus.APPROVED;
-            await this.creditRepository.update(highestCredit.id, highestCredit);
-            others.forEach(async (other) => {
-                const currentCredit = await this.creditRepository.findOneBy({
+            if (highestBidder.length > 0) {
+                const highest = highestBidder[0];
+                const others = highestBidder.filter((x) => x.id !== highest.id);
+                const highestCredit = await this.creditRepository.findOneBy({
                     userId: highest.userId,
                     amount: highest.amount,
                 });
-                currentCredit.status = credit_entity_1.CreditStatus.DECLINED;
-                await this.creditRepository.update(currentCredit.id, currentCredit);
-            });
-            const currentItem = item;
-            currentItem.status = auction_entity_1.AuctionStatus.COMPLETED;
-            this.auctionRepository.update(item.id, currentItem);
+                highestCredit.status = credit_entity_1.CreditStatus.APPROVED;
+                await this.creditRepository.update(highestCredit.id, highestCredit);
+                others.forEach(async (other) => {
+                    let currentCredit = await this.creditRepository.findOneBy({
+                        userId: other.userId,
+                        amount: other.amount,
+                    });
+                    if (currentCredit) {
+                        currentCredit.status = credit_entity_1.CreditStatus.DECLINED;
+                        await this.creditRepository.update(currentCredit.id, currentCredit);
+                    }
+                });
+            }
+            item.status = auction_entity_1.AuctionStatus.COMPLETED;
+            this.auctionRepository.update(item.id, item);
         });
-        return `$scanned and changed ${pendingAuctions.length}`;
+        return Promise.resolve(`Scanned and changed ${pendingAuctions.length}`);
     }
 };
 exports.CronService = CronService;
