@@ -5,13 +5,10 @@ const swagger_1 = require("@nestjs/swagger");
 const app_module_1 = require("./app.module");
 const path_1 = require("path");
 const fs_1 = require("fs");
-var cors = require('cors');
 async function bootstrap() {
-    const app = await core_1.NestFactory.create(app_module_1.AppModule, { cors: true });
+    const app = await core_1.NestFactory.create(app_module_1.AppModule);
     app.enableCors({
-        allowedHeaders: '*',
-        origin: '*',
-        credentials: true,
+        origin: 'http://localhost:3000/',
     });
     const config = new swagger_1.DocumentBuilder()
         .setTitle('Item Auction API')

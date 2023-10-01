@@ -4,15 +4,12 @@ import { AppModule } from './app.module';
 
 import { resolve } from 'path';
 import { writeFileSync, createWriteStream } from 'fs';
-var cors = require('cors');
 
 async function bootstrap() {
-  const app = await NestFactory.create(AppModule, { cors: true });
+  const app = await NestFactory.create(AppModule);
 
   app.enableCors({
-    allowedHeaders: '*',
-    origin: '*',
-    credentials: true,
+    origin: 'http://localhost:3000/',
   });
 
   const config = new DocumentBuilder()
