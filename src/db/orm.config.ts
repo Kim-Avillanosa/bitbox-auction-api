@@ -15,7 +15,7 @@ const configService = new ConfigService();
    an essential to have sample data upon initialization
  */
 export const ormConfig: TypeOrmModuleOptions & DataSourceOptions = {
-  timezone: 'Asia/Kuala_Lumpur',
+  timezone: '+08:00',
   type: 'mysql',
   port: 3306,
   host: configService.get<string>('TYPEORM_DATABASE_HOST'),

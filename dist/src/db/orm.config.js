@@ -7,7 +7,7 @@ const dotenv_1 = require("dotenv");
 (0, dotenv_1.config)();
 const configService = new config_1.ConfigService();
 exports.ormConfig = {
-    timezone: 'Asia/Kuala_Lumpur',
+    timezone: '+08:00',
     type: 'mysql',
     port: 3306,
     host: configService.get('TYPEORM_DATABASE_HOST'),
