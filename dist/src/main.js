@@ -8,7 +8,7 @@ const fs_1 = require("fs");
 async function bootstrap() {
     const app = await core_1.NestFactory.create(app_module_1.AppModule, { cors: true });
     app.enableCors({
-        origin: '*',
+        origin: 'http://localhost:3000',
         methods: 'GET,HEAD,PUT,PATCH,POST,DELETE',
         preflightContinue: false,
         optionsSuccessStatus: 204,
