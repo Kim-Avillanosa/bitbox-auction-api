@@ -9,21 +9,22 @@ var cors = require('cors');
 async function bootstrap() {
   const app = await NestFactory.create(AppModule, { cors: true });
 
-  app.use(
-    cors({
-      origin: '*',
-      methods: 'GET,HEAD,PUT,PATCH,POST,DELETE',
-      preflightContinue: true,
-      optionsSuccessStatus: 200,
-    }),
-  );
+  app.enableCors({
+    allowedHeaders: '*',
+    origin: '*',
+    credentials: true,
+  });
 
   const config = new DocumentBuilder()
     .setTitle('Item Auction API')
     .addBearerAuth()
     .setDescription('Web service for item auctions')
     .setVersion('1.0')
-    .addTag('users')
+    .addTag('users', 'user details management')
+    .addTag('auth', 'authentication')
+    .addTag('debit', 'account wallet management for deposits')
+    .addTag('credit', 'account wallet management for withdrawals')
+    .addTag('auction', 'manage auction, bids')
     .build();
 
   const document = SwaggerModule.createDocument(app, config);

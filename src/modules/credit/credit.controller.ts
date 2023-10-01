@@ -13,7 +13,7 @@ import {
 import { CreditService } from './credit.service';
 import { CreditDto } from './dto/credit.dto';
 import { JWTUtil } from 'src/jwt/jwt.service';
-import { ApiBearerAuth } from '@nestjs/swagger';
+import { ApiBearerAuth, ApiTags } from '@nestjs/swagger';
 import { AuthGuard } from '../auth/auth.guard';
 import { ClassSerializerInterceptor } from '@nestjs/common';
 
@@ -21,6 +21,7 @@ import { ClassSerializerInterceptor } from '@nestjs/common';
 @ApiBearerAuth()
 @UseGuards(AuthGuard)
 @Controller('credit')
+@ApiTags('credit')
 export class CreditController {
   constructor(
     private readonly creditService: CreditService,

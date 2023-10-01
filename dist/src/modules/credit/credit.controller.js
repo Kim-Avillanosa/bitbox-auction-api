@@ -47,6 +47,7 @@ exports.CreditController = CreditController = __decorate([
     (0, swagger_1.ApiBearerAuth)(),
     (0, common_1.UseGuards)(auth_guard_1.AuthGuard),
     (0, common_1.Controller)('credit'),
+    (0, swagger_1.ApiTags)('credit'),
     __metadata("design:paramtypes", [credit_service_1.CreditService,
         jwt_service_1.JWTUtil])
 ], CreditController);

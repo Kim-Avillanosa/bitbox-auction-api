@@ -91,6 +91,7 @@ exports.UsersController = UsersController = __decorate([
     (0, common_1.UseInterceptors)(common_2.ClassSerializerInterceptor),
     (0, swagger_1.ApiBearerAuth)(),
     (0, common_1.Controller)('users'),
+    (0, swagger_1.ApiTags)('users'),
     __metadata("design:paramtypes", [users_service_1.UsersService])
 ], UsersController);
 //# sourceMappingURL=users.controller.js.map

@@ -47,6 +47,7 @@ exports.DebitController = DebitController = __decorate([
     (0, swagger_1.ApiBearerAuth)(),
     (0, common_1.UseGuards)(auth_guard_1.AuthGuard),
     (0, common_1.Controller)('debit'),
+    (0, swagger_1.ApiTags)('debit'),
     __metadata("design:paramtypes", [debit_service_1.DebitService,
         jwt_service_1.JWTUtil])
 ], DebitController);

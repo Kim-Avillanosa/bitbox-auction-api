@@ -8,18 +8,21 @@ const fs_1 = require("fs");
 var cors = require('cors');
 async function bootstrap() {
     const app = await core_1.NestFactory.create(app_module_1.AppModule, { cors: true });
-    app.use(cors({
+    app.enableCors({
+        allowedHeaders: '*',
         origin: '*',
-        methods: 'GET,HEAD,PUT,PATCH,POST,DELETE',
-        preflightContinue: true,
-        optionsSuccessStatus: 200,
-    }));
+        credentials: true,
+    });
     const config = new swagger_1.DocumentBuilder()
         .setTitle('Item Auction API')
         .addBearerAuth()
         .setDescription('Web service for item auctions')
         .setVersion('1.0')
-        .addTag('users')
+        .addTag('users', 'user details management')
+        .addTag('auth', 'authentication')
+        .addTag('debit', 'account wallet management for deposits')
+        .addTag('credit', 'account wallet management for withdrawals')
+        .addTag('auction', 'manage auction, bids')
         .build();
     const document = swagger_1.SwaggerModule.createDocument(app, config);
     swagger_1.SwaggerModule.setup('/swagger', app, document);

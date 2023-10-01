@@ -88,6 +88,7 @@ exports.AuctionController = AuctionController = __decorate([
     (0, swagger_1.ApiBearerAuth)(),
     (0, common_1.UseGuards)(auth_guard_1.AuthGuard),
     (0, common_1.Controller)('auction'),
+    (0, swagger_1.ApiTags)('auction'),
     __metadata("design:paramtypes", [auction_service_1.AuctionService,
         jwt_service_1.JWTUtil])
 ], AuctionController);
