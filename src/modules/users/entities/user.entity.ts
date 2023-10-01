@@ -1,3 +1,4 @@
+import { AuctionBid } from 'src/modules/auction/entities/auctionbid.entity';
 import { Credit } from 'src/modules/credit/entities/credit.entity';
 import { Debit } from 'src/modules/debit/entities/debit.entity';
 import {
@@ -7,6 +8,7 @@ import {
   CreateDateColumn,
   UpdateDateColumn,
   OneToMany,
+  ManyToOne,
 } from 'typeorm';
 import { EncryptionTransformer } from 'typeorm-encrypted';
 
@@ -41,4 +43,7 @@ export class User {
 
   @OneToMany(() => Credit, (credit) => credit.user)
   withdrawals: Credit[];
+
+  @OneToMany(() => AuctionBid, (bid) => bid.user)
+  bids: AuctionBid[];
 }

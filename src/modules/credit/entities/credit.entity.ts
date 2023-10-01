@@ -22,7 +22,7 @@ export class Credit {
   @UpdateDateColumn()
   updated_at?: Date; // Last updated date
 
-  @Column()
+  @Column({ type: 'decimal' })
   amount: number;
 
   @Column()

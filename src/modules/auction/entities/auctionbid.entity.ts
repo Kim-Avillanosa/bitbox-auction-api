@@ -1,18 +1,17 @@
+import { Auction } from 'src/modules/auction/entities/auction.entity';
 import { User } from 'src/modules/users/entities/user.entity';
 import {
   Column,
-  Entity,
   PrimaryGeneratedColumn,
   CreateDateColumn,
   UpdateDateColumn,
-  OneToMany,
   ManyToOne,
   JoinColumn,
+  Entity,
 } from 'typeorm';
 
 @Entity()
-export class Debit {
-  //primary key for every tables
+export class AuctionBid {
   @PrimaryGeneratedColumn()
   id?: number;
 
@@ -28,7 +27,13 @@ export class Debit {
   @Column()
   userId: number;
 
-  @ManyToOne(() => User, (user) => user.deposits)
-  @JoinColumn({ name: 'userId' })
+  @Column()
+  auctionId: number;
+
+  @ManyToOne(() => Auction, (auction) => auction.bids)
+  @JoinColumn({ name: 'auctionId' })
+  auction: Auction;
+
+  @ManyToOne(() => User, (user) => user.bids)
   user: User;
 }

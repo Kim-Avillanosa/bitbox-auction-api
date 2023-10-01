@@ -11,6 +11,7 @@ import { UsersModule } from './modules/users/users.module';
 import { AuthModule } from './modules/auth/auth.module';
 import { DebitModule } from './modules/debit/debit.module';
 import { CreditModule } from './modules/credit/credit.module';
+import { AuctionModule } from './modules/auction/auction.module';
 
 @Module({
   // add orm module to create persistence instance
@@ -28,6 +29,7 @@ import { CreditModule } from './modules/credit/credit.module';
     AuthModule,
     DebitModule,
     CreditModule,
+    AuctionModule,
   ],
   controllers: [AppController],
   providers: [AppService],
