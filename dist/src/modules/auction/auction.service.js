@@ -74,7 +74,7 @@ let AuctionService = class AuctionService {
             });
             return highestBidder;
         }
-        return { message: 'No bids yet' };
+        return [];
     }
     async highestBidder(id) {
         const bidCount = await this.auctionBidRepository.count({
