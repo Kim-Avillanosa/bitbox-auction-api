@@ -11,7 +11,7 @@ import {
 } from '@nestjs/common';
 import { CreditService } from './credit.service';
 import { CreditDto } from './dto/credit.dto';
-import { JWTUtil } from 'src/jwt/jwt.service.ts';
+import { JWTUtil } from 'src/jwt/jwt.service';
 import { ApiBearerAuth } from '@nestjs/swagger';
 import { AuthGuard } from '../auth/auth.guard';
 
