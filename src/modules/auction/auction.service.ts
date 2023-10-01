@@ -50,10 +50,10 @@ export class AuctionService {
 
   // Create an auction
   async create(created_by: string, createAuctionDto: CreateAuctionDto) {
-    var startdate = new Date(Date.now());
-    var enddate = startdate;
+    const startdate = new Date(Date.now());
+    const durationInMinutes = createAuctionDto.duration;
 
-    enddate.setMinutes(startdate.getMinutes() + createAuctionDto.duration);
+    const enddate = new Date(startdate.getTime() + durationInMinutes * 60000);
 
     const data = {
       created_by: created_by,
@@ -61,9 +61,9 @@ export class AuctionService {
       startPrice: createAuctionDto.startAmount,
       expiration: enddate,
     };
-    this.auctionRepository.create(data);
 
-    return this.auctionRepository.save(data);
+    await this.auctionRepository.create(data);
+    return await this.auctionRepository.save(data);
   }
 
   // Create a bid
