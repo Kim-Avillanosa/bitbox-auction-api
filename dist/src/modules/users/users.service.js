@@ -70,7 +70,7 @@ let UsersService = class UsersService {
             }).orWhere('status = :new', { new: credit_entity_1.CreditStatus.NEW });
         })
             .getRawOne();
-        const totalCredit = parseFloat(totalCreditResult.total) || 0;
+        const totalCredit = parseInt(totalCreditResult.total ?? 0) || 0;
         const overall = totalDebit - totalCredit;
         return Promise.resolve({
             balance: overall,

@@ -77,7 +77,7 @@ export class UsersService {
       })
       .getRawOne();
 
-    const totalCredit: number = parseFloat(totalCreditResult.total) || 0;
+    const totalCredit: number = parseInt(totalCreditResult.total ?? 0) || 0;
 
     const overall = totalDebit - totalCredit;
     return Promise.resolve({
