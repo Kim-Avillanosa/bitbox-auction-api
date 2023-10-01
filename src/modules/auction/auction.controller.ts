@@ -38,6 +38,11 @@ export class AuctionController {
     return this.auctionService.create(token.username, createAuctionDto);
   }
 
+  @Get(':id')
+  getBid(@Param('id') id: number) {
+    return this.auctionService.getAuction(id);
+  }
+
   @Post(':id/start')
   start(@Param('id') id: number) {
     return this.auctionService.startBid(id);

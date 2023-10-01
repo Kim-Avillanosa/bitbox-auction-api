@@ -29,6 +29,17 @@ export class AuctionService {
     return query;
   }
 
+  async getAuction(id: number) {
+    const query = this.auctionRepository
+      .createQueryBuilder('auction')
+      .leftJoin(AuctionBid, 'bid', 'bid.auctionId = auction.id')
+      .select(['auction', 'MAX(bid.amount) AS currentBid'])
+      .where('auction.id = :id', { id })
+      .getOne();
+
+    return query;
+  }
+
   // Create an auction
   async create(created_by: string, createAuctionDto: CreateAuctionDto) {
     const data = {

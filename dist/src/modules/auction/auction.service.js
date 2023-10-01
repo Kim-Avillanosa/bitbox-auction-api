@@ -34,6 +34,15 @@ let AuctionService = class AuctionService {
             .getRawMany();
         return query;
     }
+    async getAuction(id) {
+        const query = this.auctionRepository
+            .createQueryBuilder('auction')
+            .leftJoin(auctionbid_entity_1.AuctionBid, 'bid', 'bid.auctionId = auction.id')
+            .select(['auction', 'MAX(bid.amount) AS currentBid'])
+            .where('auction.id = :id', { id })
+            .getOne();
+        return query;
+    }
     async create(created_by, createAuctionDto) {
         const data = {
             created_by: created_by,

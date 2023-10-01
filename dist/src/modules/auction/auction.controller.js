@@ -32,6 +32,9 @@ let AuctionController = class AuctionController {
         const token = this.jwtUtil.decode(authHeader);
         return this.auctionService.create(token.username, createAuctionDto);
     }
+    getBid(id) {
+        return this.auctionService.getAuction(id);
+    }
     start(id) {
         return this.auctionService.startBid(id);
     }
@@ -59,6 +62,13 @@ __decorate([
     __metadata("design:paramtypes", [create_auction_dto_1.CreateAuctionDto, Object]),
     __metadata("design:returntype", void 0)
 ], AuctionController.prototype, "create", null);
+__decorate([
+    (0, common_1.Get)(':id'),
+    __param(0, (0, common_1.Param)('id')),
+    __metadata("design:type", Function),
+    __metadata("design:paramtypes", [Number]),
+    __metadata("design:returntype", void 0)
+], AuctionController.prototype, "getBid", null);
 __decorate([
     (0, common_1.Post)(':id/start'),
     __param(0, (0, common_1.Param)('id')),
