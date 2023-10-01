@@ -80,7 +80,7 @@ export class AuctionService {
       return highestBidder;
     }
 
-    return { message: 'No bids yet' };
+    return [];
   }
 
   // Get highest bidder based on auction id
