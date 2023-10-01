@@ -8,7 +8,7 @@ const fs_1 = require("fs");
 async function bootstrap() {
     const app = await core_1.NestFactory.create(app_module_1.AppModule);
     app.enableCors({
-        origin: 'http://localhost:3000/',
+        origin: '*',
     });
     const config = new swagger_1.DocumentBuilder()
         .setTitle('Item Auction API')
