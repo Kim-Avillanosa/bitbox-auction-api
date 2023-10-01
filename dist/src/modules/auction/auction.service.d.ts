@@ -15,6 +15,9 @@ export declare class AuctionService {
         expiration: Date;
     } & Auction>;
     startBid(id: number): Promise<import("typeorm").UpdateResult>;
+    getBidList(id: number): Promise<AuctionBid[] | {
+        message: string;
+    }>;
     highestBidder(id: number): Promise<AuctionBid | {
         message: string;
     }>;

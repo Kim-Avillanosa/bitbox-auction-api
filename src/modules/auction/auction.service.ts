@@ -51,6 +51,27 @@ export class AuctionService {
     return this.auctionRepository.update(id, currentAuction);
   }
 
+  // Get bid list
+  async getBidList(id: number) {
+    const bidCount = await this.auctionBidRepository.count({
+      where: {
+        auctionId: id,
+      },
+    });
+
+    if (bidCount > 0) {
+      const highestBidder = await this.auctionBidRepository.find({
+        where: { auctionId: id },
+        order: { created_at: 'DESC' },
+        relations: ['user', 'auction'],
+      });
+
+      return highestBidder;
+    }
+
+    return { message: 'No bids yet' };
+  }
+
   // Get highest bidder based on auction id
   async highestBidder(id: number) {
     const bidCount = await this.auctionBidRepository.count({

@@ -55,6 +55,11 @@ export class AuctionController {
     return this.auctionService.highestBidder(id);
   }
 
+  @Get(':id/bidders')
+  getBidders(@Param('id') id: number) {
+    return this.auctionService.getBidList(id);
+  }
+
   @Get(':status')
   getAuctions(@Param('status') status: AuctionStatus) {
     return this.auctionService.getAuctions(status);

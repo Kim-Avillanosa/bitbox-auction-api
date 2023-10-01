@@ -51,6 +51,22 @@ let AuctionService = class AuctionService {
         currentAuction.status = auction_entity_1.AuctionStatus.ONGOING;
         return this.auctionRepository.update(id, currentAuction);
     }
+    async getBidList(id) {
+        const bidCount = await this.auctionBidRepository.count({
+            where: {
+                auctionId: id,
+            },
+        });
+        if (bidCount > 0) {
+            const highestBidder = await this.auctionBidRepository.find({
+                where: { auctionId: id },
+                order: { created_at: 'DESC' },
+                relations: ['user', 'auction'],
+            });
+            return highestBidder;
+        }
+        return { message: 'No bids yet' };
+    }
     async highestBidder(id) {
         const bidCount = await this.auctionBidRepository.count({
             where: {

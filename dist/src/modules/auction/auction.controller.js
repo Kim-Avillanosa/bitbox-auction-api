@@ -43,6 +43,9 @@ let AuctionController = class AuctionController {
     getHigestBidder(id) {
         return this.auctionService.highestBidder(id);
     }
+    getBidders(id) {
+        return this.auctionService.getBidList(id);
+    }
     getAuctions(status) {
         return this.auctionService.getAuctions(status);
     }
@@ -79,6 +82,13 @@ __decorate([
     __metadata("design:paramtypes", [Number]),
     __metadata("design:returntype", void 0)
 ], AuctionController.prototype, "getHigestBidder", null);
+__decorate([
+    (0, common_1.Get)(':id/bidders'),
+    __param(0, (0, common_1.Param)('id')),
+    __metadata("design:type", Function),
+    __metadata("design:paramtypes", [Number]),
+    __metadata("design:returntype", void 0)
+], AuctionController.prototype, "getBidders", null);
 __decorate([
     (0, common_1.Get)(':status'),
     __param(0, (0, common_1.Param)('status')),
