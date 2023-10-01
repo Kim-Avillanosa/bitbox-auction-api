@@ -34,7 +34,7 @@ __decorate([
     __metadata("design:type", Date)
 ], Credit.prototype, "updated_at", void 0);
 __decorate([
-    (0, typeorm_1.Column)({ type: 'decimal' }),
+    (0, typeorm_1.Column)('decimal', { precision: 5, scale: 2 }),
     __metadata("design:type", Number)
 ], Credit.prototype, "amount", void 0);
 __decorate([

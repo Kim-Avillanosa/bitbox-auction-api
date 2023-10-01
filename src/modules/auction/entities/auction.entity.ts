@@ -27,7 +27,7 @@ export class Auction {
   @Column({ nullable: false })
   created_by: string;
 
-  @Column({ type: 'decimal' })
+  @Column('decimal', { precision: 5, scale: 2 })
   startPrice: number;
 
   @CreateDateColumn()

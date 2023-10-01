@@ -65,6 +65,14 @@ let UsersService = class UsersService {
         this.usersRepository.delete(id);
     }
     async balance(id) {
+        const debitCount = await this.debitRepository.count({
+            where: {
+                userId: id,
+            },
+        });
+        if (debitCount == 0) {
+            return { balance: 0 };
+        }
         const totalDebit = await this.debitRepository.sum('amount', {
             userId: id,
         });

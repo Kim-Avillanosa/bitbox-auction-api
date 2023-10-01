@@ -34,7 +34,7 @@ __decorate([
     __metadata("design:type", String)
 ], Auction.prototype, "created_by", void 0);
 __decorate([
-    (0, typeorm_1.Column)({ type: 'decimal' }),
+    (0, typeorm_1.Column)('decimal', { precision: 5, scale: 2 }),
     __metadata("design:type", Number)
 ], Auction.prototype, "startPrice", void 0);
 __decorate([

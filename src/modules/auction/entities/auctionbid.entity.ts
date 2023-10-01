@@ -21,7 +21,7 @@ export class AuctionBid {
   @UpdateDateColumn()
   updated_at?: Date; // Last updated date
 
-  @Column({ type: 'decimal' })
+  @Column('decimal', { precision: 5, scale: 2 })
   amount: number;
 
   @Column()
