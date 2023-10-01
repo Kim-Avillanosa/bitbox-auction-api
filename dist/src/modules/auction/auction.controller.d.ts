@@ -13,7 +13,7 @@ export declare class AuctionController {
         startPrice: number;
         expiration: Date;
     } & import("./entities/auction.entity").Auction>;
-    getBid(id: number): Promise<import("./entities/auction.entity").Auction>;
+    getBid(id: number): Promise<any>;
     start(id: number): Promise<import("typeorm").UpdateResult>;
     placeBid(id: number, bid: BidDto, req: any): Promise<{
         amount: number;

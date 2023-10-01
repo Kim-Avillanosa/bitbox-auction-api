@@ -35,7 +35,7 @@ export class AuctionService {
       .leftJoin(AuctionBid, 'bid', 'bid.auctionId = auction.id')
       .select(['auction', 'MAX(bid.amount) AS currentBid'])
       .where('auction.id = :id', { id })
-      .getOne();
+      .getRawOne();
 
     return query;
   }

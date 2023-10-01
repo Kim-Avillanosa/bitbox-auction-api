@@ -8,7 +8,7 @@ export declare class AuctionService {
     private auctionBidRepository;
     constructor(auctionRepository: Repository<Auction>, auctionBidRepository: Repository<AuctionBid>);
     getAuctions(status: AuctionStatus): Promise<any[]>;
-    getAuction(id: number): Promise<Auction>;
+    getAuction(id: number): Promise<any>;
     create(created_by: string, createAuctionDto: CreateAuctionDto): Promise<{
         created_by: string;
         itemName: string;
