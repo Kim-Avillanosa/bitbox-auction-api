@@ -4,16 +4,19 @@ import { AppModule } from './app.module';
 
 import { resolve } from 'path';
 import { writeFileSync, createWriteStream } from 'fs';
-import { get } from 'http';
+var cors = require('cors');
 
 async function bootstrap() {
   const app = await NestFactory.create(AppModule, { cors: true });
-  app.enableCors({
-    origin: '*',
-    methods: 'GET,HEAD,PUT,PATCH,POST,DELETE',
-    preflightContinue: true,
-    optionsSuccessStatus: 204,
-  });
+
+  app.use(
+    cors({
+      origin: '*',
+      methods: 'GET,HEAD,PUT,PATCH,POST,DELETE',
+      preflightContinue: true,
+      optionsSuccessStatus: 200,
+    }),
+  );
 
   const config = new DocumentBuilder()
     .setTitle('Item Auction API')
