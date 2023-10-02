@@ -60,10 +60,16 @@ let UsersService = class UsersService {
         const totalDebit = await this.debitRepository.sum('amount', {
             userId: id,
         });
-        const totalCredit = await this.creditRepository.sum('amount', {
-            userId: id,
-            status: credit_entity_1.CreditStatus.DECLINED,
-        });
+        const totalCredit = await this.creditRepository
+            .createQueryBuilder()
+            .select('SUM(amount)', 'total')
+            .where('userId = :userId', { userId: id })
+            .andWhere((qb) => {
+            qb.where('status = :approved', {
+                approved: credit_entity_1.CreditStatus.APPROVED,
+            }).orWhere('status = :new', { new: credit_entity_1.CreditStatus.NEW });
+        })
+            .getRawOne();
         const overall = totalDebit - totalCredit;
         return Promise.resolve({
             balance: overall,

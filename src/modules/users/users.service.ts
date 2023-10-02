@@ -66,10 +66,21 @@ export class UsersService {
       userId: id,
     });
 
-    const totalCredit = await this.creditRepository.sum('amount', {
-      userId: id,
-      status: CreditStatus.DECLINED,
-    });
+    // const totalCredit = await this.creditRepository.sum('amount', {
+    //   userId: id,
+    //   status: CreditStatus.DECLINED,
+    // });
+
+    const totalCredit = await this.creditRepository
+      .createQueryBuilder()
+      .select('SUM(amount)', 'total')
+      .where('userId = :userId', { userId: id })
+      .andWhere((qb) => {
+        qb.where('status = :approved', {
+          approved: CreditStatus.APPROVED,
+        }).orWhere('status = :new', { new: CreditStatus.NEW });
+      })
+      .getRawOne();
 
     const overall = totalDebit - totalCredit;
     return Promise.resolve({
