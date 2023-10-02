@@ -16,7 +16,9 @@ import { JWTUtil } from 'src/jwt/jwt.service';
 import { ApiBearerAuth, ApiTags } from '@nestjs/swagger';
 import { DepositDto } from './dto/deposit.dto';
 import { ClassSerializerInterceptor } from '@nestjs/common';
+import { SkipThrottle } from '@nestjs/throttler';
 
+@SkipThrottle()
 @UseInterceptors(ClassSerializerInterceptor)
 @ApiBearerAuth()
 @UseGuards(AuthGuard)

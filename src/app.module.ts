@@ -17,10 +17,17 @@ import { JWTUtil } from './jwt/jwt.service';
 import { ServeStaticModule } from '@nestjs/serve-static';
 import { join } from 'path';
 import { CronModule } from './modules/cron/cron.module';
+import { ThrottlerModule } from '@nestjs/throttler';
 
 @Module({
   // add orm module to create persistence instance
   imports: [
+    ThrottlerModule.forRoot([
+      {
+        ttl: 5000,
+        limit: 1,
+      },
+    ]),
     ServeStaticModule.forRoot({
       rootPath: join(__dirname, '..', 'swagger-static'),
       serveRoot: process.env.NODE_ENV === 'development' ? '/' : '/swagger',

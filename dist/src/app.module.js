@@ -27,6 +27,7 @@ const jwt_service_1 = require("./jwt/jwt.service");
 const serve_static_1 = require("@nestjs/serve-static");
 const path_1 = require("path");
 const cron_module_1 = require("./modules/cron/cron.module");
+const throttler_1 = require("@nestjs/throttler");
 let AppModule = class AppModule {
     constructor(dataSource) { }
 };
@@ -34,6 +35,12 @@ exports.AppModule = AppModule;
 exports.AppModule = AppModule = __decorate([
     (0, common_1.Module)({
         imports: [
+            throttler_1.ThrottlerModule.forRoot([
+                {
+                    ttl: 5000,
+                    limit: 1,
+                },
+            ]),
             serve_static_1.ServeStaticModule.forRoot({
                 rootPath: (0, path_1.join)(__dirname, '..', 'swagger-static'),
                 serveRoot: process.env.NODE_ENV === 'development' ? '/' : '/swagger',

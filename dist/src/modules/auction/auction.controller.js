@@ -22,6 +22,7 @@ const swagger_1 = require("@nestjs/swagger");
 const jwt_service_1 = require("../../jwt/jwt.service");
 const common_2 = require("@nestjs/common");
 const auction_entity_1 = require("./entities/auction.entity");
+const throttler_1 = require("@nestjs/throttler");
 let AuctionController = class AuctionController {
     constructor(auctionService, jwtUtil) {
         this.auctionService = auctionService;
@@ -77,6 +78,7 @@ __decorate([
     __metadata("design:returntype", void 0)
 ], AuctionController.prototype, "start", null);
 __decorate([
+    (0, throttler_1.SkipThrottle)({ default: false }),
     (0, common_1.Post)(':id/bid'),
     __param(0, (0, common_1.Param)('id')),
     __param(1, (0, common_1.Body)()),
@@ -107,6 +109,7 @@ __decorate([
     __metadata("design:returntype", void 0)
 ], AuctionController.prototype, "getAuctions", null);
 exports.AuctionController = AuctionController = __decorate([
+    (0, throttler_1.SkipThrottle)(),
     (0, common_1.UseInterceptors)(common_2.ClassSerializerInterceptor),
     (0, swagger_1.ApiBearerAuth)(),
     (0, common_1.UseGuards)(auth_guard_1.AuthGuard),

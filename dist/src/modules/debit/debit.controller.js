@@ -20,6 +20,7 @@ const jwt_service_1 = require("../../jwt/jwt.service");
 const swagger_1 = require("@nestjs/swagger");
 const deposit_dto_1 = require("./dto/deposit.dto");
 const common_2 = require("@nestjs/common");
+const throttler_1 = require("@nestjs/throttler");
 let DebitController = class DebitController {
     constructor(debitService, jwtUtil) {
         this.debitService = debitService;
@@ -43,6 +44,7 @@ __decorate([
     __metadata("design:returntype", void 0)
 ], DebitController.prototype, "deposit", null);
 exports.DebitController = DebitController = __decorate([
+    (0, throttler_1.SkipThrottle)(),
     (0, common_1.UseInterceptors)(common_2.ClassSerializerInterceptor),
     (0, swagger_1.ApiBearerAuth)(),
     (0, common_1.UseGuards)(auth_guard_1.AuthGuard),

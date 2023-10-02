@@ -20,6 +20,7 @@ const jwt_service_1 = require("../../jwt/jwt.service");
 const swagger_1 = require("@nestjs/swagger");
 const auth_guard_1 = require("../auth/auth.guard");
 const common_2 = require("@nestjs/common");
+const throttler_1 = require("@nestjs/throttler");
 let CreditController = class CreditController {
     constructor(creditService, jwtUtil) {
         this.creditService = creditService;
@@ -43,6 +44,7 @@ __decorate([
     __metadata("design:returntype", void 0)
 ], CreditController.prototype, "withdraw", null);
 exports.CreditController = CreditController = __decorate([
+    (0, throttler_1.SkipThrottle)(),
     (0, common_1.UseInterceptors)(common_2.ClassSerializerInterceptor),
     (0, swagger_1.ApiBearerAuth)(),
     (0, common_1.UseGuards)(auth_guard_1.AuthGuard),

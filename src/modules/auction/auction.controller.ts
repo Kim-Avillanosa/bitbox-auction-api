@@ -18,7 +18,9 @@ import { ApiBearerAuth, ApiTags } from '@nestjs/swagger';
 import { JWTUtil } from 'src/jwt/jwt.service';
 import { ClassSerializerInterceptor } from '@nestjs/common';
 import { AuctionStatus } from './entities/auction.entity';
+import { SkipThrottle } from '@nestjs/throttler';
 
+@SkipThrottle()
 @UseInterceptors(ClassSerializerInterceptor)
 @ApiBearerAuth()
 @UseGuards(AuthGuard)
@@ -48,6 +50,7 @@ export class AuctionController {
     return this.auctionService.startBid(id);
   }
 
+  @SkipThrottle({ default: false })
   @Post(':id/bid')
   placeBid(@Param('id') id: number, @Body() bid: BidDto, @Req() req) {
     const authHeader = req.headers.authorization;
