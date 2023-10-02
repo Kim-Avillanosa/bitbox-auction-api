@@ -19,10 +19,12 @@ const auction_entity_1 = require("./entities/auction.entity");
 const typeorm_2 = require("typeorm");
 const common_2 = require("@nestjs/common");
 const auctionbid_entity_1 = require("./entities/auctionbid.entity");
+const credit_entity_1 = require("../credit/entities/credit.entity");
 let AuctionService = class AuctionService {
-    constructor(auctionRepository, auctionBidRepository) {
+    constructor(auctionRepository, auctionBidRepository, creditRepository) {
         this.auctionRepository = auctionRepository;
         this.auctionBidRepository = auctionBidRepository;
+        this.creditRepository = creditRepository;
     }
     async getAuctions(status) {
         const query = this.auctionRepository
@@ -116,6 +118,12 @@ let AuctionService = class AuctionService {
             auctionId: id,
             userId: userId,
         };
+        const creditData = {
+            amount: bid.amount,
+            userId: userId,
+        };
+        await this.creditRepository.create(creditData);
+        await this.creditRepository.save(creditData);
         await this.auctionBidRepository.create(data);
         return this.auctionBidRepository.save(data);
     }
@@ -125,7 +133,9 @@ exports.AuctionService = AuctionService = __decorate([
     (0, common_1.Injectable)(),
     __param(0, (0, typeorm_1.InjectRepository)(auction_entity_1.Auction)),
     __param(1, (0, typeorm_1.InjectRepository)(auctionbid_entity_1.AuctionBid)),
+    __param(2, (0, typeorm_1.InjectRepository)(credit_entity_1.Credit)),
     __metadata("design:paramtypes", [typeorm_2.Repository,
+        typeorm_2.Repository,
         typeorm_2.Repository])
 ], AuctionService);
 //# sourceMappingURL=auction.service.js.map

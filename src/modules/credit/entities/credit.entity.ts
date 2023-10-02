@@ -10,6 +10,12 @@ import {
   JoinColumn,
 } from 'typeorm';
 
+export enum CreditStatus {
+  NEW = 'NEW',
+  APPROVED = 'APPROVED',
+  DECLINED = 'DECLINED',
+}
+
 @Entity()
 export class Credit {
   //primary key for every tables
@@ -27,6 +33,13 @@ export class Credit {
 
   @Column()
   userId: number;
+
+  @Column({
+    type: 'enum',
+    enum: CreditStatus,
+    default: CreditStatus.NEW,
+  })
+  status: CreditStatus; // Last updated date
 
   @ManyToOne(() => User, (user) => user.withdrawals)
   @JoinColumn({ name: 'userId' })

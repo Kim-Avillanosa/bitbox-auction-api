@@ -17,11 +17,12 @@ async function bootstrap() {
     .addBearerAuth()
     .setDescription('Web service for item auctions')
     .setVersion('1.0')
-    .addTag('users', 'user details management')
-    .addTag('auth', 'authentication')
-    .addTag('debit', 'account wallet management for deposits')
-    .addTag('credit', 'account wallet management for withdrawals')
-    .addTag('auction', 'manage auction, bids')
+    .addTag('users', 'User details management')
+    .addTag('auth', 'Authentication')
+    .addTag('debit', 'Account wallet management for deposits')
+    .addTag('credit', 'Account wallet management for withdrawals')
+    .addTag('auction', 'Manage auction, bids')
+    .addTag('cron', 'Make scheduled requests')
     .build();
 
   const document = SwaggerModule.createDocument(app, config);

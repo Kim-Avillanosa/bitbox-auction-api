@@ -9,9 +9,15 @@ var __metadata = (this && this.__metadata) || function (k, v) {
     if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.Credit = void 0;
+exports.Credit = exports.CreditStatus = void 0;
 const user_entity_1 = require("../../users/entities/user.entity");
 const typeorm_1 = require("typeorm");
+var CreditStatus;
+(function (CreditStatus) {
+    CreditStatus["NEW"] = "NEW";
+    CreditStatus["APPROVED"] = "APPROVED";
+    CreditStatus["DECLINED"] = "DECLINED";
+})(CreditStatus || (exports.CreditStatus = CreditStatus = {}));
 let Credit = class Credit {
 };
 exports.Credit = Credit;
@@ -35,6 +41,14 @@ __decorate([
     (0, typeorm_1.Column)(),
     __metadata("design:type", Number)
 ], Credit.prototype, "userId", void 0);
+__decorate([
+    (0, typeorm_1.Column)({
+        type: 'enum',
+        enum: CreditStatus,
+        default: CreditStatus.NEW,
+    }),
+    __metadata("design:type", String)
+], Credit.prototype, "status", void 0);
 __decorate([
     (0, typeorm_1.ManyToOne)(() => user_entity_1.User, (user) => user.withdrawals),
     (0, typeorm_1.JoinColumn)({ name: 'userId' }),

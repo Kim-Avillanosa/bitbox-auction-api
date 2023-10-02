@@ -3,10 +3,12 @@ import { Auction, AuctionStatus } from './entities/auction.entity';
 import { Repository } from 'typeorm';
 import { BidDto } from './dto/bid.dto';
 import { AuctionBid } from './entities/auctionbid.entity';
+import { Credit } from '../credit/entities/credit.entity';
 export declare class AuctionService {
     private auctionRepository;
     private auctionBidRepository;
-    constructor(auctionRepository: Repository<Auction>, auctionBidRepository: Repository<AuctionBid>);
+    private creditRepository;
+    constructor(auctionRepository: Repository<Auction>, auctionBidRepository: Repository<AuctionBid>, creditRepository: Repository<Credit>);
     getAuctions(status: AuctionStatus): Promise<any[]>;
     getAuction(id: number): Promise<any>;
     create(created_by: string, createAuctionDto: CreateAuctionDto): Promise<{

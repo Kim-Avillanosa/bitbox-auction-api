@@ -6,6 +6,7 @@ import { Repository } from 'typeorm';
 import { BidDto } from './dto/bid.dto';
 import { BadRequestException } from '@nestjs/common';
 import { AuctionBid } from './entities/auctionbid.entity';
+import { Credit } from '../credit/entities/credit.entity';
 
 @Injectable()
 export class AuctionService {
@@ -15,6 +16,9 @@ export class AuctionService {
 
     @InjectRepository(AuctionBid)
     private auctionBidRepository: Repository<AuctionBid>,
+
+    @InjectRepository(Credit)
+    private creditRepository: Repository<Credit>,
   ) {}
 
   async getAuctions(status: AuctionStatus) {
@@ -141,6 +145,16 @@ export class AuctionService {
       auctionId: id,
       userId: userId,
     };
+
+    const creditData = {
+      amount: bid.amount,
+      userId: userId,
+    };
+
+    await this.creditRepository.create(creditData);
+
+    await this.creditRepository.save(creditData);
+
     await this.auctionBidRepository.create(data);
 
     return this.auctionBidRepository.save(data);

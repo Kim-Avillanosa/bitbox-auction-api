@@ -62,6 +62,7 @@ let UsersService = class UsersService {
         });
         const totalCredit = await this.creditRepository.sum('amount', {
             userId: id,
+            status: credit_entity_1.CreditStatus.DECLINED,
         });
         const overall = totalDebit - totalCredit;
         return Promise.resolve({

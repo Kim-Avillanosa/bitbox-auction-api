@@ -26,6 +26,7 @@ const auction_module_1 = require("./modules/auction/auction.module");
 const jwt_service_1 = require("./jwt/jwt.service");
 const serve_static_1 = require("@nestjs/serve-static");
 const path_1 = require("path");
+const cron_module_1 = require("./modules/cron/cron.module");
 let AppModule = class AppModule {
     constructor(dataSource) { }
 };
@@ -51,6 +52,7 @@ exports.AppModule = AppModule = __decorate([
             debit_module_1.DebitModule,
             credit_module_1.CreditModule,
             auction_module_1.AuctionModule,
+            cron_module_1.CronModule,
         ],
         controllers: [app_controller_1.AppController],
         providers: [app_service_1.AppService, jwt_service_1.JWTUtil],

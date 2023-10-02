@@ -16,6 +16,7 @@ import { JWTUtil } from './jwt/jwt.service';
 
 import { ServeStaticModule } from '@nestjs/serve-static';
 import { join } from 'path';
+import { CronModule } from './modules/cron/cron.module';
 
 @Module({
   // add orm module to create persistence instance
@@ -38,6 +39,7 @@ import { join } from 'path';
     DebitModule,
     CreditModule,
     AuctionModule,
+    CronModule,
   ],
   controllers: [AppController],
   providers: [AppService, JWTUtil],

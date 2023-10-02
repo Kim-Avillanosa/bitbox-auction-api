@@ -5,7 +5,7 @@ import { InjectRepository } from '@nestjs/typeorm';
 import { User } from './entities/user.entity';
 import { Repository, UpdateResult } from 'typeorm';
 import { Debit } from '../debit/entities/debit.entity';
-import { Credit } from '../credit/entities/credit.entity';
+import { Credit, CreditStatus } from '../credit/entities/credit.entity';
 
 @Injectable()
 export class UsersService {
@@ -68,6 +68,7 @@ export class UsersService {
 
     const totalCredit = await this.creditRepository.sum('amount', {
       userId: id,
+      status: CreditStatus.DECLINED,
     });
 
     const overall = totalDebit - totalCredit;
