@@ -8,7 +8,7 @@ import { BadRequestException } from '@nestjs/common';
 import { AuctionBid } from './entities/auctionbid.entity';
 import { Credit, CreditStatus } from '../credit/entities/credit.entity';
 import { Debit } from '../debit/entities/debit.entity';
-import moment from 'moment';
+import * as moment from 'moment-timezone';
 
 @Injectable()
 export class AuctionService {
@@ -51,14 +51,19 @@ export class AuctionService {
 
   // Create an auction
   async create(created_by: string, createAuctionDto: CreateAuctionDto) {
-    const startdate = moment(); // Current date and time
-    const enddate = startdate.clone().add(createAuctionDto.duration, 'minutes'); // Calculate expiration
+    // Use the specified timezone for the current date and time
+    const timeZone = 'Asia/Singapore';
+    const startdate = moment.tz(timeZone);
+
+    // Calculate expiration in the specified timezone
+    const enddate = startdate.clone().add(createAuctionDto.duration, 'minutes');
 
     const data = {
       created_by: created_by,
       itemName: createAuctionDto.name,
       startPrice: createAuctionDto.startAmount,
-      expiration: enddate.toDate(), // Convert Moment.js object to Date
+      // Format the expiration date as a UTC timestamp
+      expiration: enddate.toDate(),
     };
 
     const createdAuction = this.auctionRepository.create(data);
