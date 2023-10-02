@@ -51,12 +51,20 @@ export class AuctionService {
 
   // Create an auction
   async create(created_by: string, createAuctionDto: CreateAuctionDto) {
-    // Use the specified timezone for the current date and time
+    // Set the desired timezone (Asia/Singapore in this case)
     const timeZone = 'Asia/Singapore';
+
+    // Calculate the offset in minutes (Singapore is UTC+8)
+    const timeZoneOffsetMinutes = 8 * 60;
+
+    // Use the specified timezone for the current date and time
     const startdate = moment.tz(timeZone);
 
-    // Calculate expiration in the specified timezone
+    // Calculate expiration in the specified timezone, accounting for the offset
     const enddate = startdate.clone().add(createAuctionDto.duration, 'minutes');
+
+    // Adjust for the timezone offset
+    enddate.subtract(timeZoneOffsetMinutes, 'minutes');
 
     const data = {
       created_by: created_by,
