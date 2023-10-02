@@ -4,9 +4,12 @@ import { AppModule } from './app.module';
 
 import { resolve } from 'path';
 import { writeFileSync, createWriteStream } from 'fs';
+import moment from 'moment';
 
 async function bootstrap() {
   const app = await NestFactory.create(AppModule);
+
+  moment.tz.setDefault('Asia/Singapore');
 
   app.enableCors({
     origin: '*',
