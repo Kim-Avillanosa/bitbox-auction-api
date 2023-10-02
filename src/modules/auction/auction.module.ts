@@ -6,9 +6,10 @@ import { Auction } from './entities/auction.entity';
 import { AuctionBid } from './entities/auctionbid.entity';
 import { JWTUtil } from 'src/jwt/jwt.service';
 import { Credit } from '../credit/entities/credit.entity';
+import { Debit } from '../debit/entities/debit.entity';
 
 @Module({
-  imports: [TypeOrmModule.forFeature([Auction, AuctionBid, Credit])],
+  imports: [TypeOrmModule.forFeature([Auction, AuctionBid, Credit, Debit])],
   controllers: [AuctionController],
   providers: [AuctionService, JWTUtil],
 })

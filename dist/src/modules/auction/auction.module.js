@@ -15,12 +15,13 @@ const auction_entity_1 = require("./entities/auction.entity");
 const auctionbid_entity_1 = require("./entities/auctionbid.entity");
 const jwt_service_1 = require("../../jwt/jwt.service");
 const credit_entity_1 = require("../credit/entities/credit.entity");
+const debit_entity_1 = require("../debit/entities/debit.entity");
 let AuctionModule = class AuctionModule {
 };
 exports.AuctionModule = AuctionModule;
 exports.AuctionModule = AuctionModule = __decorate([
     (0, common_1.Module)({
-        imports: [typeorm_1.TypeOrmModule.forFeature([auction_entity_1.Auction, auctionbid_entity_1.AuctionBid, credit_entity_1.Credit])],
+        imports: [typeorm_1.TypeOrmModule.forFeature([auction_entity_1.Auction, auctionbid_entity_1.AuctionBid, credit_entity_1.Credit, debit_entity_1.Debit])],
         controllers: [auction_controller_1.AuctionController],
         providers: [auction_service_1.AuctionService, jwt_service_1.JWTUtil],
     })

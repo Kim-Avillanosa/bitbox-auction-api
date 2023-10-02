@@ -6,7 +6,8 @@ import { Repository } from 'typeorm';
 import { BidDto } from './dto/bid.dto';
 import { BadRequestException } from '@nestjs/common';
 import { AuctionBid } from './entities/auctionbid.entity';
-import { Credit } from '../credit/entities/credit.entity';
+import { Credit, CreditStatus } from '../credit/entities/credit.entity';
+import { Debit } from '../debit/entities/debit.entity';
 
 @Injectable()
 export class AuctionService {
@@ -19,6 +20,9 @@ export class AuctionService {
 
     @InjectRepository(Credit)
     private creditRepository: Repository<Credit>,
+
+    @InjectRepository(Debit)
+    private debitRepository: Repository<Debit>,
   ) {}
 
   async getAuctions(status: AuctionStatus) {
@@ -109,8 +113,34 @@ export class AuctionService {
     return { message: 'No bids yet' };
   }
 
+  async balance(id: number): Promise<{ balance: number }> {
+    const totalDebit = await this.debitRepository.sum('amount', {
+      userId: id,
+    });
+
+    const totalCreditResult = await this.creditRepository
+      .createQueryBuilder()
+      .select('SUM(amount)', 'total')
+      .where('userId = :userId', { userId: id })
+      .andWhere((qb) => {
+        qb.where('status = :approved', {
+          approved: CreditStatus.APPROVED,
+        }).orWhere('status = :new', { new: CreditStatus.NEW });
+      })
+      .getRawOne();
+
+    const totalCredit: number = parseFloat(totalCreditResult.total) || 0;
+
+    const overall = totalDebit - totalCredit;
+    return Promise.resolve({
+      balance: overall,
+    });
+  }
+
   // place bid
   async placeBid(id: number, userId: number, bid: BidDto) {
+    const wallet = await this.balance(userId);
+
     const currentAuction = await this.auctionRepository.findOneBy({
       id: id,
     });
@@ -125,9 +155,14 @@ export class AuctionService {
       auctionId: id,
     });
 
+    if (wallet.balance < bid.amount)
+      throw new BadRequestException(
+        `Sorry, but it appears you don't have a sufficient balance to place a bid for that amount. Please check your account balance and try again with a valid bid amount.`,
+      );
+
     if (currentAuction.startPrice > bid.amount)
       throw new BadRequestException(
-        'Sorry, The  submitted amount is lower than the start price',
+        'Sorry, The submitted amount is lower than the start price',
       );
 
     if (currentAuction.status !== AuctionStatus.ONGOING)

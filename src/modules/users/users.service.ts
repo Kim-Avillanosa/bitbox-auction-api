@@ -66,11 +66,6 @@ export class UsersService {
       userId: id,
     });
 
-    // const totalCredit = await this.creditRepository.sum('amount', {
-    //   userId: id,
-    //   status: CreditStatus.DECLINED,
-    // });
-
     const totalCreditResult = await this.creditRepository
       .createQueryBuilder()
       .select('SUM(amount)', 'total')

@@ -20,11 +20,13 @@ const typeorm_2 = require("typeorm");
 const common_2 = require("@nestjs/common");
 const auctionbid_entity_1 = require("./entities/auctionbid.entity");
 const credit_entity_1 = require("../credit/entities/credit.entity");
+const debit_entity_1 = require("../debit/entities/debit.entity");
 let AuctionService = class AuctionService {
-    constructor(auctionRepository, auctionBidRepository, creditRepository) {
+    constructor(auctionRepository, auctionBidRepository, creditRepository, debitRepository) {
         this.auctionRepository = auctionRepository;
         this.auctionBidRepository = auctionBidRepository;
         this.creditRepository = creditRepository;
+        this.debitRepository = debitRepository;
     }
     async getAuctions(status) {
         const query = this.auctionRepository
@@ -95,7 +97,28 @@ let AuctionService = class AuctionService {
         }
         return { message: 'No bids yet' };
     }
+    async balance(id) {
+        const totalDebit = await this.debitRepository.sum('amount', {
+            userId: id,
+        });
+        const totalCreditResult = await this.creditRepository
+            .createQueryBuilder()
+            .select('SUM(amount)', 'total')
+            .where('userId = :userId', { userId: id })
+            .andWhere((qb) => {
+            qb.where('status = :approved', {
+                approved: credit_entity_1.CreditStatus.APPROVED,
+            }).orWhere('status = :new', { new: credit_entity_1.CreditStatus.NEW });
+        })
+            .getRawOne();
+        const totalCredit = parseFloat(totalCreditResult.total) || 0;
+        const overall = totalDebit - totalCredit;
+        return Promise.resolve({
+            balance: overall,
+        });
+    }
     async placeBid(id, userId, bid) {
+        const wallet = await this.balance(userId);
         const currentAuction = await this.auctionRepository.findOneBy({
             id: id,
         });
@@ -107,8 +130,10 @@ let AuctionService = class AuctionService {
         const highestBid = await this.auctionBidRepository.maximum('amount', {
             auctionId: id,
         });
+        if (wallet.balance < bid.amount)
+            throw new common_2.BadRequestException(`Sorry, but it appears you don't have a sufficient balance to place a bid for that amount. Please check your account balance and try again with a valid bid amount.`);
         if (currentAuction.startPrice > bid.amount)
-            throw new common_2.BadRequestException('Sorry, The  submitted amount is lower than the start price');
+            throw new common_2.BadRequestException('Sorry, The submitted amount is lower than the start price');
         if (currentAuction.status !== auction_entity_1.AuctionStatus.ONGOING)
             throw new common_2.BadRequestException('Sorry, you can only place your bid on items that are currently being auctioned.');
         if (bidCount > 0 && highestBid >= bid.amount)
@@ -134,7 +159,9 @@ exports.AuctionService = AuctionService = __decorate([
     __param(0, (0, typeorm_1.InjectRepository)(auction_entity_1.Auction)),
     __param(1, (0, typeorm_1.InjectRepository)(auctionbid_entity_1.AuctionBid)),
     __param(2, (0, typeorm_1.InjectRepository)(credit_entity_1.Credit)),
+    __param(3, (0, typeorm_1.InjectRepository)(debit_entity_1.Debit)),
     __metadata("design:paramtypes", [typeorm_2.Repository,
+        typeorm_2.Repository,
         typeorm_2.Repository,
         typeorm_2.Repository])
 ], AuctionService);
