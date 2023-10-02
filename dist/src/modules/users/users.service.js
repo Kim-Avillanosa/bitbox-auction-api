@@ -86,10 +86,10 @@ let UsersService = class UsersService {
             }).orWhere('status = :new', { new: credit_entity_1.CreditStatus.NEW });
         })
             .getRawOne();
-        const totalCredit = parseInt(totalCreditResult.total ?? 0) || 0;
+        const totalCredit = totalCreditResult.total;
         const overall = totalDebit - totalCredit;
         if (overall < 0) {
-            return { balance: totalCredit };
+            return { balance: totalDebit };
         }
         return Promise.resolve({
             balance: overall,
