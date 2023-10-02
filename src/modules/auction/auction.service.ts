@@ -8,6 +8,7 @@ import { BadRequestException } from '@nestjs/common';
 import { AuctionBid } from './entities/auctionbid.entity';
 import { Credit, CreditStatus } from '../credit/entities/credit.entity';
 import { Debit } from '../debit/entities/debit.entity';
+import moment from 'moment';
 
 @Injectable()
 export class AuctionService {
@@ -50,20 +51,20 @@ export class AuctionService {
 
   // Create an auction
   async create(created_by: string, createAuctionDto: CreateAuctionDto) {
-    var startdate = new Date(Date.now());
-    var enddate = startdate;
-
-    enddate.setMinutes(startdate.getMinutes() + createAuctionDto.duration);
+    const startdate = moment(); // Current date and time
+    const enddate = startdate.clone().add(createAuctionDto.duration, 'minutes'); // Calculate expiration
 
     const data = {
       created_by: created_by,
       itemName: createAuctionDto.name,
       startPrice: createAuctionDto.startAmount,
-      expiration: enddate,
+      expiration: enddate.toDate(), // Convert Moment.js object to Date
     };
-    this.auctionRepository.create(data);
 
-    return this.auctionRepository.save(data);
+    const createdAuction = this.auctionRepository.create(data);
+    const savedAuction = await this.auctionRepository.save(createdAuction);
+
+    return savedAuction;
   }
 
   // Create a bid
