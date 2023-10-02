@@ -20,6 +20,7 @@ const update_user_dto_1 = require("./dto/update-user.dto");
 const swagger_1 = require("@nestjs/swagger");
 const auth_guard_1 = require("../auth/auth.guard");
 const common_2 = require("@nestjs/common");
+const throttler_1 = require("@nestjs/throttler");
 let UsersController = class UsersController {
     constructor(usersService) {
         this.usersService = usersService;
@@ -88,6 +89,7 @@ __decorate([
     __metadata("design:returntype", void 0)
 ], UsersController.prototype, "balance", null);
 exports.UsersController = UsersController = __decorate([
+    (0, throttler_1.SkipThrottle)(),
     (0, common_1.UseInterceptors)(common_2.ClassSerializerInterceptor),
     (0, swagger_1.ApiBearerAuth)(),
     (0, common_1.Controller)('users'),
