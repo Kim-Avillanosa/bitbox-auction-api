@@ -101,7 +101,7 @@ export class UsersService {
 
     const totalCredit: number = totalCreditResult.total;
 
-    const overall = totalCredit - totalDebit;
+    const overall = totalDebit - totalCredit;
 
     return Promise.resolve({
       balance: overall,
