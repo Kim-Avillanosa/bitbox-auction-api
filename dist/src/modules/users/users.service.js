@@ -88,9 +88,6 @@ let UsersService = class UsersService {
             .getRawOne();
         const totalCredit = totalCreditResult.total;
         const overall = totalDebit - totalCredit;
-        if (overall < 0) {
-            return { balance: totalDebit };
-        }
         return Promise.resolve({
             balance: overall,
         });

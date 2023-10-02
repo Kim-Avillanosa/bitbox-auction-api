@@ -103,10 +103,6 @@ export class UsersService {
 
     const overall = totalDebit - totalCredit;
 
-    if (overall < 0) {
-      return { balance: totalDebit };
-    }
-
     return Promise.resolve({
       balance: overall,
     });
