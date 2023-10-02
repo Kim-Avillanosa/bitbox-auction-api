@@ -71,7 +71,7 @@ export class UsersService {
     //   status: CreditStatus.DECLINED,
     // });
 
-    const totalCredit = await this.creditRepository
+    const totalCreditResult = await this.creditRepository
       .createQueryBuilder()
       .select('SUM(amount)', 'total')
       .where('userId = :userId', { userId: id })
@@ -81,6 +81,8 @@ export class UsersService {
         }).orWhere('status = :new', { new: CreditStatus.NEW });
       })
       .getRawOne();
+
+    const totalCredit: number = parseFloat(totalCreditResult.total) || 0;
 
     const overall = totalDebit - totalCredit;
     return Promise.resolve({
