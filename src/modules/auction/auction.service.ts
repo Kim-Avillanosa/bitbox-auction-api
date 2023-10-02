@@ -54,24 +54,22 @@ export class AuctionService {
     // Set the desired timezone (Asia/Singapore in this case)
     const timeZone = 'Asia/Singapore';
 
-    // Calculate the offset in minutes (Singapore is UTC+8)
-    const timeZoneOffsetMinutes = 8 * 60;
-
     // Use the specified timezone for the current date and time
     const startdate = moment.tz(timeZone);
 
     // Calculate expiration in the specified timezone, accounting for the offset
-    const enddate = startdate.clone().add(createAuctionDto.duration, 'minutes');
+    const enddate = startdate
+      .clone()
+      .add(createAuctionDto.duration - 8 * 60, 'minutes');
 
-    // Adjust for the timezone offset
-    enddate.subtract(timeZoneOffsetMinutes, 'minutes');
+    const formattedEndDate = enddate.tz(timeZone).format('YYYY-MM-DD HH:mm:ss');
 
     const data = {
       created_by: created_by,
       itemName: createAuctionDto.name,
       startPrice: createAuctionDto.startAmount,
-      // Format the expiration date as a UTC timestamp
-      expiration: enddate.toDate(),
+      // Store the formatted expiration date as a string in 'Asia/Singapore' timezone
+      expiration: formattedEndDate,
     };
 
     const createdAuction = this.auctionRepository.create(data);
