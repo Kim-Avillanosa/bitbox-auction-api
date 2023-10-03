@@ -7,12 +7,7 @@ export declare class AuctionController {
     private readonly auctionService;
     private readonly jwtUtil;
     constructor(auctionService: AuctionService, jwtUtil: JWTUtil);
-    create(createAuctionDto: CreateAuctionDto, req: any): Promise<{
-        created_by: string;
-        itemName: string;
-        startPrice: number;
-        expiration: Date;
-    } & import("./entities/auction.entity").Auction>;
+    create(createAuctionDto: CreateAuctionDto, req: any): Promise<import("./entities/auction.entity").Auction>;
     getBid(id: number): Promise<any>;
     start(id: number): Promise<import("typeorm").UpdateResult>;
     placeBid(id: number, bid: BidDto, req: any): Promise<{

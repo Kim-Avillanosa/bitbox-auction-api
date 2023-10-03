@@ -13,12 +13,7 @@ export declare class AuctionService {
     constructor(auctionRepository: Repository<Auction>, auctionBidRepository: Repository<AuctionBid>, creditRepository: Repository<Credit>, debitRepository: Repository<Debit>);
     getAuctions(status: AuctionStatus): Promise<any[]>;
     getAuction(id: number): Promise<any>;
-    create(created_by: string, createAuctionDto: CreateAuctionDto): Promise<{
-        created_by: string;
-        itemName: string;
-        startPrice: number;
-        expiration: Date;
-    } & Auction>;
+    create(created_by: string, createAuctionDto: CreateAuctionDto): Promise<Auction>;
     startBid(id: number): Promise<import("typeorm").UpdateResult>;
     getBidList(id: number): Promise<AuctionBid[]>;
     highestBidder(id: number): Promise<AuctionBid | {

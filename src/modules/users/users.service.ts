@@ -79,6 +79,7 @@ export class UsersService {
         userId: id,
       },
     });
+    //
 
     if (debitCount == 0) {
       return { balance: 0 };
