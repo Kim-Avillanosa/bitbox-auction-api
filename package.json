@@ -13,7 +13,7 @@
     "orm:create": "ts-node ./create-migration.ts",
     "orm:generate": "ts-node ./generate-migration.ts",
     "orm:revert": "npm run typeorm -- -d ./src/db/orm.config.ts migration:revert",
-    "build": "nest build",
+    "build": "jest && nest build",
     "start": "nest start",
     "start:dev": "nest start --watch",
     "start:debug": "nest start --debug --watch",
