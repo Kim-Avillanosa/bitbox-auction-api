@@ -20,11 +20,11 @@ export class AppController {
     }
 
     const currentDate = new Date();
-    const timezoneDate = convertGMTtoGMT8(currentDate);
+    let timezoneDate = convertGMTtoGMT8(currentDate);
 
     // Add the time to the current date
-    const newDate = new Date(timezoneDate.getTime() + millisecondsToAdd);
+    timezoneDate = new Date(timezoneDate.getTime() + millisecondsToAdd);
 
-    return newDate.toString();
+    return timezoneDate.toString();
   }
 }

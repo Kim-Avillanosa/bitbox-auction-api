@@ -29,9 +29,9 @@ let AppController = class AppController {
             return 'Invalid input. Please provide a valid number of milliseconds.';
         }
         const currentDate = new Date();
-        const timezoneDate = (0, convertGMTtoGMT8_1.convertGMTtoGMT8)(currentDate);
-        const newDate = new Date(timezoneDate.getTime() + millisecondsToAdd);
-        return newDate.toString();
+        let timezoneDate = (0, convertGMTtoGMT8_1.convertGMTtoGMT8)(currentDate);
+        timezoneDate = new Date(timezoneDate.getTime() + millisecondsToAdd);
+        return timezoneDate.toString();
     }
 };
 exports.AppController = AppController;
