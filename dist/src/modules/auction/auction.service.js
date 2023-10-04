@@ -21,7 +21,7 @@ const common_2 = require("@nestjs/common");
 const auctionbid_entity_1 = require("./entities/auctionbid.entity");
 const credit_entity_1 = require("../credit/entities/credit.entity");
 const debit_entity_1 = require("../debit/entities/debit.entity");
-const moment = require("moment-timezone");
+const convertGMTtoGMT8_1 = require("../../helper/convertGMTtoGMT8");
 let AuctionService = class AuctionService {
     constructor(auctionRepository, auctionBidRepository, creditRepository, debitRepository) {
         this.auctionRepository = auctionRepository;
@@ -49,17 +49,12 @@ let AuctionService = class AuctionService {
         return query;
     }
     async create(created_by, createAuctionDto) {
-        const timeZone = 'Asia/Singapore';
-        const startdate = moment.tz(timeZone);
-        const enddate = startdate
-            .clone()
-            .add(createAuctionDto.duration - 8 * 60, 'minutes');
-        const formattedEndDate = enddate.tz(timeZone).format('YYYY-MM-DD HH:mm:ss');
+        let timezoneDate = (0, convertGMTtoGMT8_1.passMsToTimezone)(createAuctionDto.duration);
         const data = {
             created_by: created_by,
             itemName: createAuctionDto.name,
             startPrice: createAuctionDto.startAmount,
-            expiration: formattedEndDate,
+            expiration: timezoneDate,
         };
         const createdAuction = this.auctionRepository.create(data);
         const savedAuction = await this.auctionRepository.save(createdAuction);

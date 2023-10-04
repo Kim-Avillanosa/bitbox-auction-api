@@ -9,6 +9,10 @@ import { AuctionBid } from './entities/auctionbid.entity';
 import { Credit, CreditStatus } from '../credit/entities/credit.entity';
 import { Debit } from '../debit/entities/debit.entity';
 import * as moment from 'moment-timezone';
+import {
+  convertGMTtoGMT8,
+  passMsToTimezone,
+} from 'src/helper/convertGMTtoGMT8';
 
 @Injectable()
 export class AuctionService {
@@ -51,25 +55,14 @@ export class AuctionService {
 
   // Create an auction
   async create(created_by: string, createAuctionDto: CreateAuctionDto) {
-    // Set the desired timezone (Asia/Singapore in this case)
-    const timeZone = 'Asia/Singapore';
-
-    // Use the specified timezone for the current date and time
-    const startdate = moment.tz(timeZone);
-
-    // Calculate expiration in the specified timezone, accounting for the offset
-    const enddate = startdate
-      .clone()
-      .add(createAuctionDto.duration - 8 * 60, 'minutes');
-
-    const formattedEndDate = enddate.tz(timeZone).format('YYYY-MM-DD HH:mm:ss');
+    let timezoneDate = passMsToTimezone(createAuctionDto.duration);
 
     const data = {
       created_by: created_by,
       itemName: createAuctionDto.name,
       startPrice: createAuctionDto.startAmount,
       // Store the formatted expiration date as a string in 'Asia/Singapore' timezone
-      expiration: formattedEndDate,
+      expiration: timezoneDate,
     };
 
     const createdAuction = this.auctionRepository.create(data);
