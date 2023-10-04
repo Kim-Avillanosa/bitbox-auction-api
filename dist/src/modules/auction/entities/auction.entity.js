@@ -26,10 +26,6 @@ __decorate([
     __metadata("design:type", Number)
 ], Auction.prototype, "id", void 0);
 __decorate([
-    (0, typeorm_1.Column)(),
-    __metadata("design:type", String)
-], Auction.prototype, "imageSrc", void 0);
-__decorate([
     (0, typeorm_1.Column)({ nullable: false, length: '50' }),
     __metadata("design:type", String)
 ], Auction.prototype, "itemName", void 0);

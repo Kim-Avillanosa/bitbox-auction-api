@@ -6,7 +6,6 @@ export declare enum AuctionStatus {
 }
 export declare class Auction {
     id?: number;
-    imageSrc: string;
     itemName: string;
     created_by: string;
     startPrice: number;

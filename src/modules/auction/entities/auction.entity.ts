@@ -21,9 +21,6 @@ export class Auction {
   @PrimaryGeneratedColumn()
   id?: number;
 
-  @Column()
-  imageSrc: string;
-
   @Column({ nullable: false, length: '50' })
   itemName: string;
 
