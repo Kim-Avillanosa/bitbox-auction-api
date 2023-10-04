@@ -1,4 +1,11 @@
-import { Body, Controller, Post, HttpCode, HttpStatus } from '@nestjs/common';
+import {
+  Body,
+  Controller,
+  Post,
+  HttpCode,
+  HttpStatus,
+  Get,
+} from '@nestjs/common';
 import { AuthService } from './auth.service';
 import { SignInDto } from './signin-dto';
 import { ApiTags } from '@nestjs/swagger';
@@ -14,5 +21,11 @@ export class AuthController {
   @Post('login')
   signIn(@Body() signInDto: SignInDto) {
     return this.authService.signIn(signInDto.email, signInDto.password);
+  }
+
+  @HttpCode(HttpStatus.OK)
+  @Get('test')
+  test() {
+    return 'ok';
   }
 }

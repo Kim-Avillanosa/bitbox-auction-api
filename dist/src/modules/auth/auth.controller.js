@@ -25,6 +25,9 @@ let AuthController = class AuthController {
     signIn(signInDto) {
         return this.authService.signIn(signInDto.email, signInDto.password);
     }
+    test() {
+        return 'ok';
+    }
 };
 exports.AuthController = AuthController;
 __decorate([
@@ -35,6 +38,13 @@ __decorate([
     __metadata("design:paramtypes", [signin_dto_1.SignInDto]),
     __metadata("design:returntype", void 0)
 ], AuthController.prototype, "signIn", null);
+__decorate([
+    (0, common_1.HttpCode)(common_1.HttpStatus.OK),
+    (0, common_1.Get)('test'),
+    __metadata("design:type", Function),
+    __metadata("design:paramtypes", []),
+    __metadata("design:returntype", void 0)
+], AuthController.prototype, "test", null);
 exports.AuthController = AuthController = __decorate([
     (0, throttler_1.SkipThrottle)(),
     (0, common_1.Controller)('auth'),

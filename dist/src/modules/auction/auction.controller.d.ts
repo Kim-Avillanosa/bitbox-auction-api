@@ -1,7 +1,7 @@
 import { AuctionService } from './auction.service';
 import { CreateAuctionDto } from './dto/create-auction.dto';
 import { BidDto } from './dto/bid.dto';
-import { JWTUtil } from 'src/jwt/jwt.service';
+import { JWTUtil } from '../../jwt/jwt.service';
 import { AuctionStatus } from './entities/auction.entity';
 export declare class AuctionController {
     private readonly auctionService;

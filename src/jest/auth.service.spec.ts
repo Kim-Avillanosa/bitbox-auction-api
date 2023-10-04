@@ -50,7 +50,6 @@ describe('AuthService', () => {
     // Mock user repository methods
     userRepository.findOneBy = jest.fn().mockImplementation((query) => {
       const email = query.email;
-      const password = query.password;
       return mockUserData.find((user) => user.email === email);
     });
   });

@@ -1,6 +1,6 @@
-import { AuctionBid } from 'src/modules/auction/entities/auctionbid.entity';
-import { Credit } from 'src/modules/credit/entities/credit.entity';
-import { Debit } from 'src/modules/debit/entities/debit.entity';
+import { AuctionBid } from '../../auction/entities/auctionbid.entity';
+import { Credit } from '../../credit/entities/credit.entity';
+import { Debit } from '../../debit/entities/debit.entity';
 export declare class User {
     email: string;
     password: string;

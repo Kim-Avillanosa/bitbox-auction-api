@@ -1,6 +1,6 @@
 import { CreditService } from './credit.service';
 import { CreditDto } from './dto/credit.dto';
-import { JWTUtil } from 'src/jwt/jwt.service';
+import { JWTUtil } from '../../jwt/jwt.service';
 export declare class CreditController {
     private readonly creditService;
     private readonly jwtUtil;

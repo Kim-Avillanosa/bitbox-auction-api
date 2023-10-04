@@ -1,5 +1,5 @@
 import { DebitService } from './debit.service';
-import { JWTUtil } from 'src/jwt/jwt.service';
+import { JWTUtil } from '../../jwt/jwt.service';
 import { DepositDto } from './dto/deposit.dto';
 export declare class DebitController {
     private readonly debitService;
