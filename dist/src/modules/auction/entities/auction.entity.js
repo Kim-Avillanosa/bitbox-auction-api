@@ -26,7 +26,11 @@ __decorate([
     __metadata("design:type", Number)
 ], Auction.prototype, "id", void 0);
 __decorate([
-    (0, typeorm_1.Column)({ nullable: false }),
+    (0, typeorm_1.Column)(),
+    __metadata("design:type", String)
+], Auction.prototype, "imageSrc", void 0);
+__decorate([
+    (0, typeorm_1.Column)({ nullable: false, length: '50' }),
     __metadata("design:type", String)
 ], Auction.prototype, "itemName", void 0);
 __decorate([
@@ -42,7 +46,7 @@ __decorate([
     __metadata("design:type", Date)
 ], Auction.prototype, "created_at", void 0);
 __decorate([
-    (0, typeorm_1.Column)(),
+    (0, typeorm_1.Column)({ type: 'datetime' }),
     __metadata("design:type", Date)
 ], Auction.prototype, "expiration", void 0);
 __decorate([

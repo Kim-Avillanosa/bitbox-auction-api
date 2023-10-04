@@ -5,6 +5,8 @@ import {
   CreateDateColumn,
   UpdateDateColumn,
   OneToMany,
+  ManyToOne,
+  JoinColumn,
 } from 'typeorm';
 import { AuctionBid } from './auctionbid.entity';
 
@@ -19,7 +21,10 @@ export class Auction {
   @PrimaryGeneratedColumn()
   id?: number;
 
-  @Column({ nullable: false })
+  @Column()
+  imageSrc: string;
+
+  @Column({ nullable: false, length: '50' })
   itemName: string;
 
   @Column({ nullable: false })
@@ -31,7 +36,7 @@ export class Auction {
   @CreateDateColumn()
   created_at?: Date; // Creation date
 
-  @Column()
+  @Column({ type: 'datetime' })
   expiration: Date;
 
   @UpdateDateColumn()

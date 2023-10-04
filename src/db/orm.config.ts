@@ -22,9 +22,9 @@ export const ormConfig: TypeOrmModuleOptions & DataSourceOptions = {
   password: configService.get<string>('TYPEORM_DATABASE_PASSWORD'),
   database: configService.get<string>('TYPEORM_DATABASE_NAME'),
   logging: false,
-  synchronize: true,
+  synchronize: false,
   entities: [__dirname + '/../**/*.entity{.ts,.js}'], // maps all entities
-  migrations: ['dist/db/migration/*.{.ts,.js}'], // maps migrations path
+  migrations: [__dirname + '/../db/migrations/**/*.ts'], // maps migrations path
   migrationsRun: true, // executes pending migrations on run
   migrationsTableName: 'migrations',
 };

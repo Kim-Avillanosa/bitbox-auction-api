@@ -14,9 +14,9 @@ exports.ormConfig = {
     password: configService.get('TYPEORM_DATABASE_PASSWORD'),
     database: configService.get('TYPEORM_DATABASE_NAME'),
     logging: false,
-    synchronize: true,
+    synchronize: false,
     entities: [__dirname + '/../**/*.entity{.ts,.js}'],
-    migrations: ['dist/db/migration/*.{.ts,.js}'],
+    migrations: [__dirname + '/../db/migrations/**/*.ts'],
     migrationsRun: true,
     migrationsTableName: 'migrations',
 };
