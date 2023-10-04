@@ -26,7 +26,7 @@ let AuthService = class AuthService {
     async signIn(username, pass) {
         const user = await this.usersRepository.findOneBy({ email: username });
         if (user?.password !== pass) {
-            throw new common_1.UnauthorizedException();
+            throw new common_1.UnauthorizedException('Access denied!');
         }
         const { password, ...result } = user;
         const payload = { sub: user.id, username: user.email };

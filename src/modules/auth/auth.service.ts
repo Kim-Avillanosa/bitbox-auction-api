@@ -16,7 +16,7 @@ export class AuthService {
     const user = await this.usersRepository.findOneBy({ email: username });
 
     if (user?.password !== pass) {
-      throw new UnauthorizedException();
+      throw new UnauthorizedException('Access denied!');
     }
     const { password, ...result } = user;
     //  Generate a JWT with payload from database
