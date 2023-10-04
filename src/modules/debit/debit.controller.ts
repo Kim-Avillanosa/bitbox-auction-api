@@ -12,7 +12,7 @@ import {
 } from '@nestjs/common';
 import { DebitService } from './debit.service';
 import { AuthGuard } from '../auth/auth.guard';
-import { JWTUtil } from 'src/jwt/jwt.service';
+import { JWTUtil } from '../../jwt/jwt.service';
 import { ApiBearerAuth, ApiTags } from '@nestjs/swagger';
 import { DepositDto } from './dto/deposit.dto';
 import { ClassSerializerInterceptor } from '@nestjs/common';

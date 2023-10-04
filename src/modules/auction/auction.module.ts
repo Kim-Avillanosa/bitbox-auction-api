@@ -4,7 +4,7 @@ import { AuctionController } from './auction.controller';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { Auction } from './entities/auction.entity';
 import { AuctionBid } from './entities/auctionbid.entity';
-import { JWTUtil } from 'src/jwt/jwt.service';
+import { JWTUtil } from '../../jwt/jwt.service';
 import { Credit } from '../credit/entities/credit.entity';
 import { Debit } from '../debit/entities/debit.entity';
 

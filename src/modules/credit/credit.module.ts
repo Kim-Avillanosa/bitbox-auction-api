@@ -4,7 +4,7 @@ import { CreditController } from './credit.controller';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { Credit } from './entities/credit.entity';
 import { User } from '../users/entities/user.entity';
-import { JWTUtil } from 'src/jwt/jwt.service';
+import { JWTUtil } from '../../jwt/jwt.service';
 import { Debit } from '../debit/entities/debit.entity';
 
 @Module({

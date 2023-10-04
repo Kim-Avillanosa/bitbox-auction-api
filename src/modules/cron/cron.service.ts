@@ -18,12 +18,6 @@ export class CronService {
 
     @InjectRepository(Credit)
     private creditRepository: Repository<Credit>,
-
-    @InjectRepository(Debit)
-    private debitRepository: Repository<Debit>,
-
-    @InjectRepository(User)
-    private usersRepository: Repository<User>,
   ) {}
 
   async getAuctions(status: AuctionStatus) {

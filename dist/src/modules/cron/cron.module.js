@@ -12,8 +12,6 @@ const cron_service_1 = require("./cron.service");
 const cron_controller_1 = require("./cron.controller");
 const typeorm_1 = require("@nestjs/typeorm");
 const credit_entity_1 = require("../credit/entities/credit.entity");
-const user_entity_1 = require("../users/entities/user.entity");
-const debit_entity_1 = require("../debit/entities/debit.entity");
 const auction_entity_1 = require("../auction/entities/auction.entity");
 const auctionbid_entity_1 = require("../auction/entities/auctionbid.entity");
 let CronModule = class CronModule {
@@ -21,9 +19,7 @@ let CronModule = class CronModule {
 exports.CronModule = CronModule;
 exports.CronModule = CronModule = __decorate([
     (0, common_1.Module)({
-        imports: [
-            typeorm_1.TypeOrmModule.forFeature([credit_entity_1.Credit, user_entity_1.User, debit_entity_1.Debit, auction_entity_1.Auction, auctionbid_entity_1.AuctionBid]),
-        ],
+        imports: [typeorm_1.TypeOrmModule.forFeature([credit_entity_1.Credit, auction_entity_1.Auction, auctionbid_entity_1.AuctionBid])],
         controllers: [cron_controller_1.CronController],
         providers: [cron_service_1.CronService],
     })

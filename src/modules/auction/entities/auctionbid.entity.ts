@@ -1,5 +1,5 @@
-import { Auction } from 'src/modules/auction/entities/auction.entity';
-import { User } from 'src/modules/users/entities/user.entity';
+import { Auction } from '../../auction/entities/auction.entity';
+import { User } from '../../users/entities/user.entity';
 import {
   Column,
   PrimaryGeneratedColumn,

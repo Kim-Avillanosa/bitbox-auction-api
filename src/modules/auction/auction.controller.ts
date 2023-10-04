@@ -15,7 +15,7 @@ import { CreateAuctionDto } from './dto/create-auction.dto';
 import { BidDto } from './dto/bid.dto';
 import { AuthGuard } from '../auth/auth.guard';
 import { ApiBearerAuth, ApiTags } from '@nestjs/swagger';
-import { JWTUtil } from 'src/jwt/jwt.service';
+import { JWTUtil } from '../../jwt/jwt.service';
 import { ClassSerializerInterceptor } from '@nestjs/common';
 import { AuctionStatus } from './entities/auction.entity';
 import { SkipThrottle } from '@nestjs/throttler';

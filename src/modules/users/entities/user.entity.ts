@@ -1,8 +1,8 @@
-import { AuctionBid } from 'src/modules/auction/entities/auctionbid.entity';
-import { Credit } from 'src/modules/credit/entities/credit.entity';
-import { Debit } from 'src/modules/debit/entities/debit.entity';
+import { AuctionBid } from '../../auction/entities/auctionbid.entity';
+import { Credit } from '../../credit/entities/credit.entity';
+import { Debit } from '../../debit/entities/debit.entity';
 
-import { Exclude, ClassTransformer } from 'class-transformer';
+import { Exclude } from 'class-transformer';
 import {
   Column,
   Entity,
@@ -10,7 +10,6 @@ import {
   CreateDateColumn,
   UpdateDateColumn,
   OneToMany,
-  ManyToOne,
 } from 'typeorm';
 import { EncryptionTransformer } from 'typeorm-encrypted';
 

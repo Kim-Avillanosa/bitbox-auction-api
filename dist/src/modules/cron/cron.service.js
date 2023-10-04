@@ -19,15 +19,11 @@ const typeorm_2 = require("typeorm");
 const auction_entity_1 = require("../auction/entities/auction.entity");
 const auctionbid_entity_1 = require("../auction/entities/auctionbid.entity");
 const credit_entity_1 = require("../credit/entities/credit.entity");
-const debit_entity_1 = require("../debit/entities/debit.entity");
-const user_entity_1 = require("../users/entities/user.entity");
 let CronService = class CronService {
-    constructor(auctionRepository, auctionBidRepository, creditRepository, debitRepository, usersRepository) {
+    constructor(auctionRepository, auctionBidRepository, creditRepository) {
         this.auctionRepository = auctionRepository;
         this.auctionBidRepository = auctionBidRepository;
         this.creditRepository = creditRepository;
-        this.debitRepository = debitRepository;
-        this.usersRepository = usersRepository;
     }
     async getAuctions(status) {
         const currentDate = new Date();
@@ -84,11 +80,7 @@ exports.CronService = CronService = __decorate([
     __param(0, (0, typeorm_1.InjectRepository)(auction_entity_1.Auction)),
     __param(1, (0, typeorm_1.InjectRepository)(auctionbid_entity_1.AuctionBid)),
     __param(2, (0, typeorm_1.InjectRepository)(credit_entity_1.Credit)),
-    __param(3, (0, typeorm_1.InjectRepository)(debit_entity_1.Debit)),
-    __param(4, (0, typeorm_1.InjectRepository)(user_entity_1.User)),
     __metadata("design:paramtypes", [typeorm_2.Repository,
-        typeorm_2.Repository,
-        typeorm_2.Repository,
         typeorm_2.Repository,
         typeorm_2.Repository])
 ], CronService);
