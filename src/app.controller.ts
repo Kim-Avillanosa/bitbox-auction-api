@@ -1,6 +1,7 @@
 import { Controller, Get, Param, ParseIntPipe } from '@nestjs/common';
 import { AppService } from './app.service';
 import { SkipThrottle } from '@nestjs/throttler';
+import { convertGMTtoGMT8 } from './helper/convertGMTtoGMT8';
 
 @SkipThrottle()
 @Controller()
@@ -19,8 +20,10 @@ export class AppController {
     }
 
     const currentDate = new Date();
+    const timezoneDate = convertGMTtoGMT8(currentDate);
+
     // Add the time to the current date
-    const newDate = new Date(currentDate.getTime() + millisecondsToAdd);
+    const newDate = new Date(timezoneDate.getTime() + millisecondsToAdd);
 
     return newDate.toString();
   }
