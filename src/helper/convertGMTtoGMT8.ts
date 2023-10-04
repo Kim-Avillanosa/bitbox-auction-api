@@ -4,12 +4,8 @@ export function convertGMTtoGMT8(gmt0Date: Date): Date {
   // Get the current date and time in GMT+0000 (UTC)
   const gmt0Timestamp = gmt0Date.getTime();
 
-  // Calculate the new timestamp with GMT+0800 (UTC+8) offset and 59 minutes
-
-  const eq1 = 8 * 60 * 60 * 1000;
-  const eq2 = 59 * 60 * 1000;
-
-  const gmt8Timestamp = gmt0Timestamp + eq1 + eq2; // 8 hours and 59 minutes in milliseconds
+  // Calculate the new timestamp with GMT+0800 (UTC+8) offset
+  const gmt8Timestamp = gmt0Timestamp + 8 - 59; // 8 hours in milliseconds
 
   // Create a new Date object with the GMT+0800 timestamp
   const gmt8Date = new Date(gmt8Timestamp);
