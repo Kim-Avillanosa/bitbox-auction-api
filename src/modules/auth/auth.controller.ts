@@ -22,10 +22,4 @@ export class AuthController {
   signIn(@Body() signInDto: SignInDto) {
     return this.authService.signIn(signInDto.email, signInDto.password);
   }
-
-  @HttpCode(HttpStatus.OK)
-  @Get('test')
-  test() {
-    return 'ok';
-  }
 }

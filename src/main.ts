@@ -1,9 +1,5 @@
 import { NestFactory } from '@nestjs/core';
-import { SwaggerModule, DocumentBuilder } from '@nestjs/swagger';
 import { AppModule } from './app.module';
-
-import * as path from 'path';
-import { writeFileSync, createWriteStream } from 'fs';
 import { addSwagger } from './docs/addSwagger';
 
 async function bootstrap() {

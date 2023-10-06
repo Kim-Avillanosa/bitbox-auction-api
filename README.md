@@ -1,1 +1,1 @@
-**Live Demo** - https://jitera-auction-api.vercel.app
+**Live Demo** - https://jitera-auction-api.vercel.app/swagger
