@@ -1,8 +1,7 @@
 import { NestFactory } from '@nestjs/core';
 import { SwaggerModule, DocumentBuilder } from '@nestjs/swagger';
 import { AppModule } from './app.module';
-
-import { resolve } from 'path';
+import * as path from 'path';
 import { writeFileSync, createWriteStream } from 'fs';
 
 async function bootstrap() {
@@ -31,26 +30,14 @@ async function bootstrap() {
   await app.listen(process.env.PORT || 3001);
 
   await app.use((req, res, next) => {
-    const serverUrl = req.baseUrl;
-
     // get the swagger json file (if app is running in development mode)
-    if (process.env.NODE_ENV === 'development') {
-      const pathToSwaggerStaticFolder = resolve(
-        process.cwd(),
-        'swagger-static',
-      );
+    // if (process.env.NODE_ENV === 'development') {
 
-      // write swagger json file
-      const pathToSwaggerJson = resolve(
-        pathToSwaggerStaticFolder,
-        'swagger.json',
-      );
-      const swaggerJson = JSON.stringify(document, null, 2);
-      writeFileSync(pathToSwaggerJson, swaggerJson);
-      console.log(
-        `Swagger JSON file written to: '/swagger-static/swagger.json'`,
-      );
-    }
+    // }
+
+    const outputPath = path.resolve(process.cwd(), 'docs', 'swagger.json');
+    writeFileSync(outputPath, JSON.stringify(document), { encoding: 'utf8' });
+    console.log(`Swagger JSON file written to: '/docs/swagger.json'`);
 
     next();
   });

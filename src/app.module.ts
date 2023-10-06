@@ -49,8 +49,8 @@ import { APP_GUARD } from '@nestjs/core';
       },
     }),
     ServeStaticModule.forRoot({
-      rootPath: join(__dirname, '..', 'swagger-static'),
-      serveRoot: process.env.NODE_ENV === 'development' ? '/' : '/swagger',
+      rootPath: join(__dirname, '..', 'docs'),
+      serveRoot: '/swagger',
     }),
   ],
   controllers: [AppController],
