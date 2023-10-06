@@ -5,9 +5,29 @@ import { User } from '../modules/users/entities/user.entity';
 import { Repository } from 'typeorm';
 import { JwtModule } from '@nestjs/jwt';
 import { jwtConstants } from '../modules/auth/constants';
-import { INestApplication, UnauthorizedException } from '@nestjs/common';
+import {
+  INestApplication,
+  UnauthorizedException,
+  HttpStatus,
+  BadRequestException,
+} from '@nestjs/common';
 import { AuthController } from '../modules/auth/auth.controller';
 import * as request from 'supertest';
+import { AppModule } from '../app.module';
+
+// Mock user data
+const mockUserData = [
+  {
+    id: 1,
+    email: 'user1@example.com',
+    password: 'password',
+  },
+  {
+    id: 2,
+    email: 'user2@example.com',
+    password: 'password',
+  },
+];
 
 describe('AuthController', () => {
   let app: INestApplication;
@@ -19,6 +39,7 @@ describe('AuthController', () => {
     const module: TestingModule = await Test.createTestingModule({
       controllers: [AuthController],
       imports: [
+        AppModule,
         JwtModule.register({
           secret: jwtConstants.secret,
           signOptions: {
@@ -43,11 +64,11 @@ describe('AuthController', () => {
     const username = 'user1@example.com';
     const password = 'password';
 
-    jest.spyOn(authService, 'signIn').mockImplementation(() =>
-      Promise.resolve({
+    jest.spyOn(authService, 'signIn').mockImplementation((query) => {
+      return Promise.resolve({
         access_token: 'sample_token',
-      }),
-    );
+      });
+    });
 
     //act and assert
 
@@ -57,5 +78,34 @@ describe('AuthController', () => {
     });
 
     expect(result.access_token).toBeDefined();
+  });
+
+  it('/auth/login (GET)', async () => {
+    const username = 'user1@example.com';
+    const password = 'password';
+
+    jest
+      .spyOn(authService, 'signIn')
+      .mockImplementation((username, password) => {
+        const userExists = mockUserData.some((user) => user.email === username);
+
+        if (userExists) {
+          return Promise.resolve(HttpStatus.BAD_REQUEST);
+        }
+
+        return Promise.resolve({
+          access_token: 'sample_token',
+        });
+      });
+
+    //act and assert
+
+    //  act and assert
+    expect(
+      await authController.signIn({
+        email: username,
+        password: password,
+      }),
+    ).toBe(HttpStatus.BAD_REQUEST);
   });
 });

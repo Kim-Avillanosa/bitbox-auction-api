@@ -12,7 +12,7 @@ import * as moment from 'moment-timezone';
 import {
   convertGMTtoGMT8,
   passMsToTimezone,
-} from 'src/helper/convertGMTtoGMT8';
+} from '../../helper/convertGMTtoGMT8';
 
 @Injectable()
 export class AuctionService {
