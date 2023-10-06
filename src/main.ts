@@ -29,12 +29,8 @@ async function bootstrap() {
   const outputPath = path.resolve(process.cwd(), 'docs', 'swagger.json');
   writeFileSync(outputPath, JSON.stringify(document), { encoding: 'utf8' });
   SwaggerModule.setup('/swagger', app, document, {
-    customCss:
+    customCssUrl:
       'https://cdnjs.cloudflare.com/ajax/libs/swagger-ui/5.9.0/swagger-ui.css',
-    customJs: [
-      'https://cdnjs.cloudflare.com/ajax/libs/swagger-ui/5.9.0/swagger-ui-bundle.js',
-      'https://cdnjs.cloudflare.com/ajax/libs/swagger-ui/5.9.0/swagger-ui-standalone-preset.js',
-    ],
   });
 
   await app.listen(process.env.PORT || 3001);
