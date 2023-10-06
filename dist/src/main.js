@@ -23,12 +23,17 @@ async function bootstrap() {
         .addTag('cron', 'Make scheduled requests')
         .build();
     const document = swagger_1.SwaggerModule.createDocument(app, config);
-    swagger_1.SwaggerModule.setup('/swagger', app, document);
+    const outputPath = path.resolve(process.cwd(), 'docs', 'swagger.json');
+    (0, fs_1.writeFileSync)(outputPath, JSON.stringify(document), { encoding: 'utf8' });
+    swagger_1.SwaggerModule.setup('/swagger', app, document, {
+        customCss: 'https://cdnjs.cloudflare.com/ajax/libs/swagger-ui/5.9.0/swagger-ui.css',
+        customJs: [
+            'https://cdnjs.cloudflare.com/ajax/libs/swagger-ui/5.9.0/swagger-ui-bundle.js',
+            'https://cdnjs.cloudflare.com/ajax/libs/swagger-ui/5.9.0/swagger-ui-standalone-preset.js',
+        ],
+    });
     await app.listen(process.env.PORT || 3001);
     await app.use((req, res, next) => {
-        const outputPath = path.resolve(process.cwd(), 'docs', 'swagger.json');
-        (0, fs_1.writeFileSync)(outputPath, JSON.stringify(document), { encoding: 'utf8' });
-        console.log(`Swagger JSON file written to: '/docs/swagger.json'`);
         next();
     });
 }
