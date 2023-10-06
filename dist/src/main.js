@@ -30,6 +30,8 @@ async function bootstrap() {
     });
     await app.listen(process.env.PORT || 3001);
     await app.use((req, res, next) => {
+        if (process.env.NODE_ENV === 'development') {
+        }
         next();
     });
 }

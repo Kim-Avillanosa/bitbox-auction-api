@@ -50,10 +50,6 @@ import { APP_GUARD } from '@nestjs/core';
     }),
     ServeStaticModule.forRoot({
       rootPath: join(__dirname, 'docs'),
-      serveRoot: '/docs',
-    }),
-    ServeStaticModule.forRoot({
-      rootPath: join(__dirname, 'docs'),
       serveRoot: '/swagger',
     }),
   ],

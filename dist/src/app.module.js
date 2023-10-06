@@ -63,10 +63,6 @@ exports.AppModule = AppModule = __decorate([
             }),
             serve_static_1.ServeStaticModule.forRoot({
                 rootPath: (0, path_1.join)(__dirname, 'docs'),
-                serveRoot: '/docs',
-            }),
-            serve_static_1.ServeStaticModule.forRoot({
-                rootPath: (0, path_1.join)(__dirname, 'docs'),
                 serveRoot: '/swagger',
             }),
         ],

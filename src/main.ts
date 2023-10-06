@@ -1,6 +1,7 @@
 import { NestFactory } from '@nestjs/core';
 import { SwaggerModule, DocumentBuilder } from '@nestjs/swagger';
 import { AppModule } from './app.module';
+
 import * as path from 'path';
 import { writeFileSync, createWriteStream } from 'fs';
 
@@ -28,6 +29,7 @@ async function bootstrap() {
 
   const outputPath = path.resolve(process.cwd(), 'docs', 'swagger.json');
   writeFileSync(outputPath, JSON.stringify(document), { encoding: 'utf8' });
+
   SwaggerModule.setup('/swagger', app, document, {
     customCssUrl:
       'https://cdnjs.cloudflare.com/ajax/libs/swagger-ui/5.9.0/swagger-ui.css',
@@ -36,6 +38,9 @@ async function bootstrap() {
   await app.listen(process.env.PORT || 3001);
 
   await app.use((req, res, next) => {
+    // get the swagger json file (if app is running in development mode)
+    if (process.env.NODE_ENV === 'development') {
+    }
     next();
   });
 }
