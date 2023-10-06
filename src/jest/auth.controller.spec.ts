@@ -87,7 +87,9 @@ describe('AuthController', () => {
     jest
       .spyOn(authService, 'signIn')
       .mockImplementation((username, password) => {
-        const userExists = mockUserData.some((user) => user.email === username);
+        const userExists = mockUserData.some(
+          (user) => user.email === username && user.password === password,
+        );
 
         if (userExists) {
           return Promise.resolve(HttpStatus.BAD_REQUEST);
