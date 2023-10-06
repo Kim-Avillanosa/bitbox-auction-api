@@ -9,6 +9,7 @@ import {
   Req,
   UseGuards,
   UseInterceptors,
+  Put,
 } from '@nestjs/common';
 import { AuctionService } from './auction.service';
 import { CreateAuctionDto } from './dto/create-auction.dto';
@@ -45,13 +46,13 @@ export class AuctionController {
     return this.auctionService.getAuction(id);
   }
 
-  @Post(':id/start')
+  @Patch(':id/start')
   start(@Param('id') id: number) {
     return this.auctionService.startBid(id);
   }
 
   @SkipThrottle({ default: false })
-  @Post(':id/bid')
+  @Patch(':id/bid')
   placeBid(@Param('id') id: number, @Body() bid: BidDto, @Req() req) {
     const authHeader = req.headers.authorization;
     const token = this.jwtUtil.decode(authHeader);

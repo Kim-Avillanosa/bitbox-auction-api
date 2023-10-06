@@ -71,7 +71,7 @@ __decorate([
     __metadata("design:returntype", void 0)
 ], AuctionController.prototype, "getBid", null);
 __decorate([
-    (0, common_1.Post)(':id/start'),
+    (0, common_1.Patch)(':id/start'),
     __param(0, (0, common_1.Param)('id')),
     __metadata("design:type", Function),
     __metadata("design:paramtypes", [Number]),
@@ -79,7 +79,7 @@ __decorate([
 ], AuctionController.prototype, "start", null);
 __decorate([
     (0, throttler_1.SkipThrottle)({ default: false }),
-    (0, common_1.Post)(':id/bid'),
+    (0, common_1.Patch)(':id/bid'),
     __param(0, (0, common_1.Param)('id')),
     __param(1, (0, common_1.Body)()),
     __param(2, (0, common_1.Req)()),
