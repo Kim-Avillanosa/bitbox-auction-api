@@ -23,17 +23,17 @@ async function bootstrap() {
         .addTag('cron', 'Make scheduled requests')
         .build();
     const document = swagger_1.SwaggerModule.createDocument(app, config);
-    const outputPath = path.resolve(process.cwd(), 'src', 'docs', 'swagger.json');
-    (0, fs_1.writeFileSync)(outputPath, JSON.stringify(document), { encoding: 'utf8' });
     swagger_1.SwaggerModule.setup('/swagger', app, document, {
         customCssUrl: 'https://cdnjs.cloudflare.com/ajax/libs/swagger-ui/5.9.0/swagger-ui.css',
     });
-    await app.listen(process.env.PORT || 3001);
     await app.use((req, res, next) => {
         if (process.env.NODE_ENV === 'development') {
+            const outputPath = path.resolve(process.cwd(), 'src', 'docs', 'swagger.json');
+            (0, fs_1.writeFileSync)(outputPath, JSON.stringify(document), { encoding: 'utf8' });
         }
         next();
     });
+    await app.listen(process.env.PORT || 3001);
 }
 bootstrap();
 //# sourceMappingURL=main.js.map

@@ -27,21 +27,25 @@ async function bootstrap() {
 
   const document = SwaggerModule.createDocument(app, config);
 
-  const outputPath = path.resolve(process.cwd(), 'src', 'docs', 'swagger.json');
-  writeFileSync(outputPath, JSON.stringify(document), { encoding: 'utf8' });
-
   SwaggerModule.setup('/swagger', app, document, {
     customCssUrl:
       'https://cdnjs.cloudflare.com/ajax/libs/swagger-ui/5.9.0/swagger-ui.css',
   });
 
-  await app.listen(process.env.PORT || 3001);
-
   await app.use((req, res, next) => {
     // get the swagger json file (if app is running in development mode)
     if (process.env.NODE_ENV === 'development') {
+      const outputPath = path.resolve(
+        process.cwd(),
+        'src',
+        'docs',
+        'swagger.json',
+      );
+      writeFileSync(outputPath, JSON.stringify(document), { encoding: 'utf8' });
     }
     next();
   });
+
+  await app.listen(process.env.PORT || 3001);
 }
 bootstrap();
