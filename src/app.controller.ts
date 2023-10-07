@@ -1,7 +1,8 @@
 import { Controller, Get, Param, ParseIntPipe } from '@nestjs/common';
 import { AppService } from './app.service';
 import { SkipThrottle } from '@nestjs/throttler';
-import { convertGMTtoGMT8 } from './helper/convertGMTtoGMT8';
+import { convertGMTtoGMT8, passMsToTimezone } from './helper/convertGMTtoGMT8';
+import * as moment from 'moment';
 
 @SkipThrottle()
 @Controller()
@@ -19,12 +20,15 @@ export class AppController {
       return 'Invalid input. Please provide a valid number of milliseconds.';
     }
 
-    const currentDate = new Date();
-    let timezoneDate = convertGMTtoGMT8(currentDate);
+    let timezoneDate = passMsToTimezone(millisecondsToAdd);
 
     // Add the time to the current date
     timezoneDate = new Date(timezoneDate.getTime() + millisecondsToAdd);
 
-    return timezoneDate.toString();
+    const momentDate = moment(timezoneDate);
+
+    var result = momentDate.format('YYYY-MM-DD HH:mm:ss A');
+
+    return result;
   }
 }

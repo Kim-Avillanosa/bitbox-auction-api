@@ -17,6 +17,7 @@ const common_1 = require("@nestjs/common");
 const app_service_1 = require("./app.service");
 const throttler_1 = require("@nestjs/throttler");
 const convertGMTtoGMT8_1 = require("./helper/convertGMTtoGMT8");
+const moment = require("moment");
 let AppController = class AppController {
     constructor(appService) {
         this.appService = appService;
@@ -28,10 +29,11 @@ let AppController = class AppController {
         if (isNaN(millisecondsToAdd)) {
             return 'Invalid input. Please provide a valid number of milliseconds.';
         }
-        const currentDate = new Date();
-        let timezoneDate = (0, convertGMTtoGMT8_1.convertGMTtoGMT8)(currentDate);
+        let timezoneDate = (0, convertGMTtoGMT8_1.passMsToTimezone)(millisecondsToAdd);
         timezoneDate = new Date(timezoneDate.getTime() + millisecondsToAdd);
-        return timezoneDate.toString();
+        const momentDate = moment(timezoneDate);
+        var result = momentDate.format('YYYY-MM-DD HH:mm:ss A');
+        return result;
     }
 };
 exports.AppController = AppController;
