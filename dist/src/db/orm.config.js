@@ -19,6 +19,7 @@ exports.ormConfig = {
     migrations: [__dirname + '/../db/migrations/**/*.ts'],
     migrationsRun: true,
     migrationsTableName: 'migrations',
+    ssl: { rejectUnauthorized: true, secureProtocol: 'TLSv1_2_method' },
 };
 const dataSource = new typeorm_1.DataSource(exports.ormConfig);
 exports.default = dataSource;
