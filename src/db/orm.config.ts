@@ -27,7 +27,7 @@ export const ormConfig: TypeOrmModuleOptions & DataSourceOptions = {
   migrations: [__dirname + '/../db/migrations/**/*.ts'], // maps migrations path
   migrationsRun: true, // executes pending migrations on run
   migrationsTableName: 'migrations',
-  ssl: { rejectUnauthorized: true, secureProtocol: 'TLSv1_2_method' },
+  // ssl: configService.get<string>('TYPEORM_SSL_OPTIONS'),
 };
 
 const dataSource = new DataSource(ormConfig);
